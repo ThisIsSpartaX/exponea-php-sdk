@@ -25,7 +25,7 @@
             "Tauceti\\ExponeaApiTest\\": "tests/"
         }
     },
-    "license": "ISC",
+    "license": "GPL-3.0-only",
     "authors": [
         {
             "name": "Łukasz Rutkowski",
