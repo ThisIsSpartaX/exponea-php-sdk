@@ -6,9 +6,19 @@ cache:
   paths:
     - vendor/
 
-test-php7:
+test-php7.0:
   stage: test
   image: php:7.0-alpine
+  script:
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php
+    - php -r "unlink('composer-setup.php');"
+    - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
+    - php ./vendor/bin/phpunit -v --colors=never --stderr
+
+test-php7-latest:
+  stage: test
+  image: php:7-alpine
   script:
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php
