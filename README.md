@@ -1,5 +1,7 @@
 # Exponea API SDK for PHP
 
+Currently **under development** (supports only GET /system/time method from Tracking API).
+
 Usage:
 ```php
 use Tauceti\ExponeaApi\Client;
