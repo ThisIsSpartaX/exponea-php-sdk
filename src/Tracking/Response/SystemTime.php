@@ -11,7 +11,7 @@ use Tauceti\ExponeaApi\Exception\Internal\MissingResponseFieldException;
 class SystemTime
 {
     /**
-     * @var int
+     * @var float
      */
     protected $time;
 
@@ -32,17 +32,17 @@ class SystemTime
     }
 
     /**
-     * @param int $time
+     * @param float $time
      */
-    public function setTime(int $time)
+    public function setTime(float $time)
     {
         $this->time = $time;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getTime(): int
+    public function getTime(): float
     {
         return $this->time;
     }

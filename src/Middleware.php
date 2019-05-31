@@ -22,7 +22,7 @@ class Middleware
                     $body = $response->getBody()->getContents();
 
                     // Detection of "no permission response"
-                    if (mb_stripos($body, 'no permission')) {
+                    if (mb_stripos($body, 'no permission') !== false) {
                         throw new NoPermissionException(
                             'You don\'t have permission to use this method',
                             $request,

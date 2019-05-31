@@ -5,6 +5,8 @@ namespace Tauceti\ExponeaApi\Tracking;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
+use Tauceti\ExponeaApi\Exception\Internal\MissingResponseFieldException;
+use Tauceti\ExponeaApi\Exception\UnexpectedResponseSchemaException;
 use Tauceti\ExponeaApi\Tracking\Response\SystemTime;
 use Tauceti\ExponeaApi\Traits\ApiContainerTrait;
 
@@ -29,11 +31,21 @@ class Methods
      */
     public function getSystemTime(): PromiseInterface
     {
-        return $this->getClient()->call(new Request(
+        $request = new Request(
             'GET',
             '/track/v2/projects/{projectToken}/system/time'
-        ))->then(function (ResponseInterface $response) {
-            return new SystemTime(json_decode($response->getBody()->getContents(), true));
+        );
+        return $this->getClient()->call($request)->then(function (ResponseInterface $response) use ($request) {
+            try {
+                return new SystemTime(json_decode($response->getBody()->getContents(), true));
+            } catch (MissingResponseFieldException $e) {
+                throw new UnexpectedResponseSchemaException(
+                    $e->getMessage(),
+                    $request,
+                    $response,
+                    $e
+                );
+            }
         });
     }
 }

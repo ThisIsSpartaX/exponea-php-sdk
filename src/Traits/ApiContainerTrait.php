@@ -19,7 +19,7 @@ trait ApiContainerTrait
     /**
      * @return Client
      */
-    public function getClient(): Client
+    protected function getClient(): Client
     {
         return $this->client;
     }

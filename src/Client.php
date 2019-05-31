@@ -2,6 +2,7 @@
 
 namespace Tauceti\ExponeaApi;
 
+use function GuzzleHttp\choose_handler;
 use \GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
@@ -42,10 +43,12 @@ class Client
      */
     protected $tracking = null;
 
+    const HTTP_CLIENT_OPT = 'http_client';
+
     public function __construct(array $options = null)
     {
         if (isset($options['endpoint_uri'])) {
-            $this->setEndpointUri($options['enpoint_uri']);
+            $this->setEndpointUri($options['endpoint_uri']);
         }
         if (isset($options['public_key'])) {
             $this->setPublicKey($options['public_key']);
@@ -60,19 +63,26 @@ class Client
         $this->httpClient = new HttpClient(
             [
                 'base_uri' => $this->endpointUri,
-                'handler' => $this->createHandler(),
+                'handler' => $this->createHandler(
+                    isset($options[self::HTTP_CLIENT_OPT]) ? $options[self::HTTP_CLIENT_OPT]['handler'] ?? null : null
+                ),
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
                     'Authorization' => $this->getAuthHeader(),
                 ],
-            ] + ($options['http_client'] ?? [])
+            ] + ($options[self::HTTP_CLIENT_OPT] ?? [])
         );
     }
 
-    protected function createHandler(): HandlerStack
+    /**
+     * Create Guzzle requests handler with Exponea-specific middlewares
+     * @param callable|null $handler
+     * @return HandlerStack
+     */
+    protected function createHandler(callable $handler = null): HandlerStack
     {
-        $handler = HandlerStack::create();
+        $handler = new HandlerStack($handler ?: choose_handler());
 
         // Request modification
         $handler->push(Middleware::mapRequest(function (RequestInterface $request) {
@@ -84,17 +94,23 @@ class Client
                         $request->getUri()->getPath()
                     ))
             );
-        }));
+        }), 'inject_project_token');
 
         // Response validation
-        $handler->push(OwnMiddleware::verifyPermissions());
-        $handler->push(OwnMiddleware::validateJson());
-        $handler->push(OwnMiddleware::checkSuccessFlag());
+        $handler->push(OwnMiddleware::checkSuccessFlag(), 'success_flag');
+        $handler->push(OwnMiddleware::validateJson(), 'validate_json');
+        $handler->push(OwnMiddleware::verifyPermissions(), 'no_permission');
+
+        // Basic response verifications
+        $handler->push(Middleware::httpErrors(), 'http_errors');
+        $handler->push(Middleware::redirect(), 'allow_redirects');
+        $handler->push(Middleware::prepareBody(), 'prepare_body');
 
         return $handler;
     }
 
     /**
+     * Tracking API methods
      * @return TrackingApi
      */
     public function tracking(): TrackingApi
