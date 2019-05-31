@@ -2,6 +2,8 @@
 
 Currently **under development** (supports only GET /system/time method from Tracking API).
 
+Exponea API reference: https://docs.exponea.com/reference
+
 Usage:
 ```php
 use Tauceti\ExponeaApi\Client;
