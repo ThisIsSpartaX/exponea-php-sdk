@@ -7,6 +7,7 @@ use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use Tauceti\ExponeaApi\Exception\Internal\MissingResponseFieldException;
 use Tauceti\ExponeaApi\Exception\UnexpectedResponseSchemaException;
+use Tauceti\ExponeaApi\Interfaces\EventInterface;
 use Tauceti\ExponeaApi\Tracking\Response\SystemTime;
 use Tauceti\ExponeaApi\Traits\ApiContainerTrait;
 
@@ -46,6 +47,43 @@ class Methods
                     $e
                 );
             }
+        });
+    }
+
+    /**
+     * Propagate event to Expponea
+     *
+     * Please note that sending event for customer id which doesn't exist in Exponea, will automatically create
+     * contact with sent identifier. It's transparent from your side (there will be no errors).
+     *
+     * Promise resolves to null
+     * @param EventInterface $event
+     * @return PromiseInterface
+     */
+    public function addEvent(EventInterface $event): PromiseInterface
+    {
+        $customerIds = [];
+        if ($event->getCustomerIDs()->getRegistered() !== null) {
+            $customerIds['registered'] = $event->getCustomerIDs()->getRegistered();
+        }
+        if ($event->getCustomerIDs()->getCookie() !== null) {
+            $customerIds['cookie'] = $event->getCustomerIDs()->getCookie();
+        }
+
+        $body = [
+            'customer_ids' => $customerIds,
+            'event_type' => $event->getEventType(),
+            'timestamp' => $event->getTimestamp(),
+            'properties' => $event->getProperties(),
+        ];
+        $request = new Request(
+            'POST',
+            '/track/v2/projects/{projectToken}/customers/events',
+            [],
+            json_encode($body)
+        );
+        return $this->getClient()->call($request)->then(function () {
+            return null;
         });
     }
 }

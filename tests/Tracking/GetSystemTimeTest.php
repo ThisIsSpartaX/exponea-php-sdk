@@ -29,6 +29,16 @@ class GetSystemTimeTest extends TestCase
         $response = $client->tracking()->getSystemTime()->wait(true);
         $this->assertInstanceOf(SystemTime::class, $response);
         $this->assertSame(123456.78, $response->getTime());
+
+        // Request verification
+        $request = $this->mockHandler->getLastRequest();
+        $this->assertEquals('GET', $request->getMethod());
+        $this->assertEquals(
+            $client->getEndpointUri() . '/track/v2/projects/' . $this->projectToken . '/system/time',
+            $request->getUri()
+        );
+        $body = json_decode($request->getBody()->getContents(), true);
+        $this->assertEmpty($body);
     }
 
     public function testIncompleteResponse()
