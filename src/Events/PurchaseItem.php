@@ -59,7 +59,7 @@ class PurchaseItem implements EventInterface
     protected $quantity;
 
     /**
-     * @var
+     * @var string
      */
     protected $purchaseStatus;
 
@@ -140,7 +140,7 @@ class PurchaseItem implements EventInterface
     /**
      * @return float|null
      */
-    public function getValidUntil(): float
+    public function getValidUntil()
     {
         return $this->validUntil;
     }
@@ -181,7 +181,7 @@ class PurchaseItem implements EventInterface
     /**
      * @return int|null
      */
-    public function getStockLevel(): int
+    public function getStockLevel()
     {
         return $this->stockLevel;
     }
@@ -197,7 +197,7 @@ class PurchaseItem implements EventInterface
     /**
      * @return float|null
      */
-    public function getOriginalPrice(): float
+    public function getOriginalPrice()
     {
         return $this->originalPrice;
     }
@@ -213,7 +213,7 @@ class PurchaseItem implements EventInterface
     /**
      * @return float|null
      */
-    public function getPrice(): float
+    public function getPrice()
     {
         return $this->price;
     }
@@ -245,7 +245,7 @@ class PurchaseItem implements EventInterface
     /**
      * @return array|null
      */
-    public function getTags(): array
+    public function getTags()
     {
         return $this->tags;
     }
@@ -261,7 +261,7 @@ class PurchaseItem implements EventInterface
     /**
      * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }

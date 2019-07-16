@@ -3,6 +3,7 @@
 namespace Tauceti\ExponeaApiTest\Events;
 
 use PHPUnit\Framework\TestCase;
+use Tauceti\ExponeaApi\Events\Partials\Product;
 use Tauceti\ExponeaApi\Events\Purchase;
 use Tauceti\ExponeaApi\Interfaces\EventInterface;
 
@@ -12,6 +13,10 @@ class PurchaseTest extends TestCase
     {
         $object = new Purchase();
         $this->assertInstanceOf(EventInterface::class, $object);
+    }
+
+    public function testParseObjectRequirementProperty() {
+
     }
 
     public function testParseObjectProperty()
@@ -27,13 +32,19 @@ class PurchaseTest extends TestCase
             'shipping_cost' => 3.13,
             'shipping_country' => 'PL',
             'shipping_city' => 'Skierniewice',
-            'product_list' => ['a','b','c','d'],
+            'product_list' => [
+                new Product(3, 20),
+                new Product(4, 30)
+            ],
             'product_ids' => [123,345,567,891],
             'total_quantity' => 30,
             'total_price' => 55.42
         ];
 
         $object = new Purchase();
+
+        $object->addProduct(new Product(3, 20));
+        $object->addProduct(new Product(4, 30));
 
         $object->setPurchaseId(3);
         $object->setPurchaseStatus('closed');
@@ -45,9 +56,6 @@ class PurchaseTest extends TestCase
         $object->setShippingCost(3.13);
         $object->setShippingCountry('PL');
         $object->setShippingCity('Skierniewice');
-        $object->setProductList([
-           'a','b','c','d'
-        ]);
         $object->setProductIds([123,345,567,891]);
         $object->setTotalQuantity(30);
         $object->setTotalPrice(55.42);

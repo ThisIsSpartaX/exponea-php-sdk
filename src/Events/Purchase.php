@@ -3,6 +3,7 @@
 namespace Tauceti\ExponeaApi\Events;
 
 use JsonSerializable;
+use Tauceti\ExponeaApi\Events\Partials\Product;
 use Tauceti\ExponeaApi\Interfaces\CustomerIdInterface;
 use Tauceti\ExponeaApi\Interfaces\EventInterface;
 
@@ -98,6 +99,33 @@ class Purchase implements EventInterface
     protected $shippingCity;
 
 
+    public function __construct(
+        CustomerIdInterface $customerIds,
+        string $category,
+        string $action,
+        array $productIds,
+        array $productList,
+        int $purchaseId,
+        string $purchaseStatus,
+        float $totalPrice,
+        int $totalQuantity
+    )
+    {
+        $this->customerIds = $customerIds;
+        $this->category = $category;
+        $this->action = $action;
+        $this->productIds = $productIds;
+        $this->purchaseId = $purchaseId;
+        $this->purchaseStatus = $purchaseStatus;
+        $this->totalPrice = $totalPrice;
+        $this->totalQuantity = $totalQuantity;
+
+        foreach ($productList as $product) {
+            if (!$product instanceof Product) {
+                throw new \InvalidArgumentException('Items of $productList array must be instance of '.Product::class);
+            }
+        }
+    }
 
     /**
      * @return int
@@ -423,14 +451,6 @@ class Purchase implements EventInterface
     }
 
     /**
-     * @param array $purchaseList
-     */
-    public function setProductList(array $purchaseList)
-    {
-        $this->productList = $purchaseList;
-    }
-
-    /**
      * @return float
      */
     public function getTotalPrice(): float
@@ -444,5 +464,12 @@ class Purchase implements EventInterface
     public function setTotalPrice(float $totalPrice)
     {
         $this->totalPrice = $totalPrice;
+    }
+
+    /**
+     * @param Product $product
+     */
+    public function addProduct(Product $product) {
+        $this->productList[] = $product;
     }
 }
