@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tauceti\ExponeaApi\Events;
-
 
 use JsonSerializable;
 use Tauceti\ExponeaApi\Interfaces\CustomerIdInterface;
@@ -447,6 +445,4 @@ class Purchase implements EventInterface
     {
         $this->totalPrice = $totalPrice;
     }
-
-
 }

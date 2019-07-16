@@ -8,12 +8,14 @@ use Tauceti\ExponeaApi\Interfaces\EventInterface;
 
 class PurchaseTest extends TestCase
 {
-    public function testInstanceOfEventInterface() {
+    public function testInstanceOfEventInterface()
+    {
         $object = new Purchase();
         $this->assertInstanceOf(EventInterface::class, $object);
     }
 
-    public function testParseObjectProperty() {
+    public function testParseObjectProperty()
+    {
         $expectedData = [
             'purchase_id' => 3,
             'purchase_status' => 'closed',

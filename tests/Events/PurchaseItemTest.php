@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tauceti\ExponeaApiTest\Events;
-
 
 use PHPUnit\Framework\TestCase;
 use Tauceti\ExponeaApi\Events\PurchaseItem;
@@ -10,12 +8,14 @@ use Tauceti\ExponeaApi\Interfaces\EventInterface;
 
 class PurchaseItemTest extends TestCase
 {
-    public function testInstanceOfEventInterface() {
+    public function testInstanceOfEventInterface()
+    {
         $object = new PurchaseItem();
         $this->assertInstanceOf(EventInterface::class, $object);
     }
 
-    public function testParseObjectProperty() {
+    public function testParseObjectProperty()
+    {
         $expectedData = [
             'purchase_id' => 3,
             'purchase_status' => 'closed',
@@ -33,7 +33,7 @@ class PurchaseItemTest extends TestCase
                     'name' => 'YYY'
                 ]
             ],
-            'categories_path' =>  'a > b > c',
+            'categories_path' => 'a > b > c',
             'price' => 23.50,
             'original_price' => 22.39,
             'stock_level' => 999,
