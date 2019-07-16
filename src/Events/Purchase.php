@@ -56,7 +56,7 @@ class Purchase implements EventInterface
     protected $purchaseStatus;
 
     /**
-     * @var int
+     * @var float
      */
     protected $totalPrice;
 
@@ -70,6 +70,36 @@ class Purchase implements EventInterface
      */
 
     protected $voucherCode;
+
+    /**
+     * @var string|null
+     */
+
+    protected $paymentType;
+
+    /**
+     * @var string|null
+     */
+    protected $shippingType;
+
+    /**
+     * @var float|null
+     */
+    protected $shippingCost;
+
+    /**
+     * @var string|null
+     */
+
+    protected $shippingCountry;
+
+    /**
+     * @var string|null
+     */
+
+    protected $shippingCity;
+
+
 
     /**
      * @return int
@@ -101,22 +131,6 @@ class Purchase implements EventInterface
     public function setPurchaseStatus(string $purchaseStatus)
     {
         $this->purchaseStatus = $purchaseStatus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTotalPrice(): int
-    {
-        return $this->totalPrice;
-    }
-
-    /**
-     * @param int $totalPrice
-     */
-    public function setTotalPrice(int $totalPrice)
-    {
-        $this->totalPrice = $totalPrice;
     }
 
     /**
@@ -228,6 +242,86 @@ class Purchase implements EventInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getPaymentType(): string
+    {
+        return $this->paymentType;
+    }
+
+    /**
+     * @param string|null $paymentType
+     */
+    public function setPaymentType(string $paymentType)
+    {
+        $this->paymentType = $paymentType;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getShippingType(): string
+    {
+        return $this->shippingType;
+    }
+
+    /**
+     * @param string|null $shippingType
+     */
+    public function setShippingType(string $shippingType)
+    {
+        $this->shippingType = $shippingType;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getShippingCost(): float
+    {
+        return $this->shippingCost;
+    }
+
+    /**
+     * @param float|null $shippingCost
+     */
+    public function setShippingCost(float $shippingCost)
+    {
+        $this->shippingCost = $shippingCost;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getShippingCountry(): string
+    {
+        return $this->shippingCountry;
+    }
+
+    /**
+     * @param string|null $shippingCountry
+     */
+    public function setShippingCountry(string $shippingCountry)
+    {
+        $this->shippingCountry = $shippingCountry;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getShippingCity(): string
+    {
+        return $this->shippingCity;
+    }
+
+    /**
+     * @param string|null $shippingCity
+     */
+    public function setShippingCity(string $shippingCity)
+    {
+        $this->shippingCity = $shippingCity;
+    }
+
+    /**
      * @return string
      */
     public function getAction(): string
@@ -289,15 +383,20 @@ class Purchase implements EventInterface
     public function getProperties()
     {
         return [
-            "product_ids" => $this->getProductIds(),
-            "product_list" => $this->getProductList(),
-            "purchase_id" => $this->getPurchaseId(),
-            "purchase_status" => $this->getPurchaseStatus(),
-            "total_price" => $this->getTotalPrice(),
-            "total_quantity" => $this->getTotalQuantity(),
-            "voucher_code" => $this->getVoucherCode(),
-            "voucher_percentage" => $this->getVoucherPercentage(),
-            "voucher_value" => $this->getVoucherValue()
+            'purchase_id' => $this->getPurchaseId(),
+            'purchase_status' => $this->getPurchaseStatus(),
+            'voucher_code' => $this->getVoucherCode(),
+            'voucher_percentage' => $this->getVoucherPercentage(),
+            'voucher_value' => $this->getVoucherValue(),
+            'payment_type' => $this->getPaymentType(),
+            'shipping_type' => $this->getShippingType(),
+            'shipping_cost' => $this->getShippingCost(),
+            'shipping_country' => $this->getShippingCountry(),
+            'shipping_city' => $this->getShippingCity(),
+            'product_list' => $this->getProductList(),
+            'product_ids' => $this->getProductIds(),
+            'total_quantity' => $this->getTotalQuantity(),
+            'total_price' => $this->getTotalPrice(),
         ];
     }
 
@@ -331,6 +430,22 @@ class Purchase implements EventInterface
     public function setProductList(array $purchaseList)
     {
         $this->productList = $purchaseList;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalPrice(): float
+    {
+        return $this->totalPrice;
+    }
+
+    /**
+     * @param float $totalPrice
+     */
+    public function setTotalPrice(float $totalPrice)
+    {
+        $this->totalPrice = $totalPrice;
     }
 
 
