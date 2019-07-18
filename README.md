@@ -60,7 +60,7 @@ $purchase = new Purchase(
     [
         new Item('012345', 2.99, 1),
     ], // purchase items
-    'COD', // payment method
+    'COD' // payment method
 );
 $purchaseItem = new PurchaseItem(
     new RegisteredCustomer('example@example.com'),

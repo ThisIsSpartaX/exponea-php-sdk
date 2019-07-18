@@ -30,9 +30,9 @@ $event = new Purchase(
     new RegisteredCustomer('example@example.com'),
     'PREFIX12345', // purchase id
     [
-        new Item('012345', 2.99, 1),
+        new Item('012345', 2.99, 2),
     ], // purchase items
-    'COD', // payment method
+    'COD' // payment method
 );
 var_dump($client->tracking()->addEvent($event)->wait());
 
