@@ -41,7 +41,9 @@ class PurchaseItemTest extends TestCase
                 'quantity' => 2,
                 'total_price' => 5.98,
             ],
-            $properties
+            $properties,
+            'Invalid properties generated (after json serialization)',
+            0.01
         );
     }
 }

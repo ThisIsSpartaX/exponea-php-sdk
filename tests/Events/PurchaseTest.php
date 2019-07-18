@@ -2,6 +2,7 @@
 
 namespace Tauceti\ExponeaApiTest\Events;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Tauceti\ExponeaApi\Events\Purchase;
 use Tauceti\ExponeaApi\Events\Partials\RegisteredCustomer;
@@ -42,7 +43,9 @@ class PurchaseTest extends TestCase
                 'total_quantity' => 3,
                 'payment_method' => 'COD',
             ],
-            $properties
+            $properties,
+            'Invalid properties generated (after json serialization)',
+            0.01
         );
     }
 
@@ -90,7 +93,7 @@ class PurchaseTest extends TestCase
 
     public function testRejectsNonObjectItems()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $customerID = new RegisteredCustomer('example@example.com');
         new Purchase(
             $customerID,
