@@ -68,7 +68,9 @@ class PurchaseTest extends TestCase
         $this->assertEquals($expectedData, $objectData);
     }
 
-    public function testJsonParseObjectRequirementProperty() {
+    public function testJsonParseObjectRequirementProperty()
+    {
+        // phpcs:ignore
         $expectedData = '{"purchase_id":3,"purchase_status":"closed","voucher_code":null,"voucher_percentage":null,"voucher_value":null,"payment_type":null,"shipping_type":null,"shipping_cost":null,"shipping_country":null,"shipping_city":null,"product_list":[{"product_id":3,"quantity":20},{"product_id":4,"quantity":30}],"product_ids":[3,4],"total_quantity":30,"total_price":55.42}';
 
         $object = new Purchase(
