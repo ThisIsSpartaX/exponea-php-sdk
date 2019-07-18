@@ -116,7 +116,6 @@ class Purchase implements EventInterface
      * @param CustomerIdInterface $customerIds
      * @param string $category
      * @param string $action
-     * @param array $productIds
      * @param array $productList
      * @param int $purchaseId
      * @param string $purchaseStatus
@@ -127,7 +126,6 @@ class Purchase implements EventInterface
         CustomerIdInterface $customerIds,
         string $category,
         string $action,
-        array $productIds,
         array $productList,
         int $purchaseId,
         string $purchaseStatus,
@@ -137,22 +135,19 @@ class Purchase implements EventInterface
         $this->setCustomerIds($customerIds);
         $this->setCategory($category);
         $this->setAction($action);
-        $this->setProductIds($productIds);
         $this->setPurchaseId($purchaseId);
         $this->setPurchaseStatus($purchaseStatus);
         $this->setTotalPrice($totalPrice);
         $this->setTotalQuantity($totalQuantity);
         $this->setTimestamp(microtime(true));
 
-        if ($productList != null) {
-            foreach ($productList as $product) {
-                if (!$product instanceof Product) {
-                    throw new InvalidArgumentException(
-                        'Items of $productList array must be instance of ' . Product::class
-                    );
-                }
-                $this->addProduct($product);
+        foreach ($productList as $product) {
+            if (!$product instanceof Product) {
+                throw new InvalidArgumentException(
+                    'Items of $productList array must be instance of ' . Product::class
+                );
             }
+            $this->addProduct($product);
         }
     }
 
@@ -448,7 +443,13 @@ class Purchase implements EventInterface
      */
     public function getProductIds(): array
     {
-        return $this->productIds;
+        $productList = $this->getProductList();
+        $ids = [];
+        foreach ($productList as $product) {
+            /** @var Product $product */
+            $ids[] = $product->getId();
+        }
+        return $ids;
     }
 
     /**

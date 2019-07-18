@@ -3,7 +3,9 @@
 namespace Tauceti\ExponeaApiTest\Events;
 
 use PHPUnit\Framework\TestCase;
+use Tauceti\ExponeaApi\Events\Partials\Product;
 use Tauceti\ExponeaApi\Events\Partials\RegisteredCustomer;
+use Tauceti\ExponeaApi\Events\Purchase;
 use Tauceti\ExponeaApi\Events\PurchaseItem;
 use Tauceti\ExponeaApi\Interfaces\EventInterface;
 
@@ -20,6 +22,23 @@ class PurchaseItemTest extends TestCase
             3
         );
         $this->assertInstanceOf(EventInterface::class, $object);
+    }
+
+    public function testJsonParseObjectRequirementProperty() {
+
+        $expectedData = '{"purchase_id":3,"purchase_status":"closed","quantity":30,"total_price":0,"categories_path":["a","b","c"],"product_id":10,"discount_percentage":0,"discount_value":0}';
+
+        $object = new PurchaseItem(
+            new RegisteredCustomer('example@example.com'),
+            'a > b > c',
+            10,
+            30,
+            'closed',
+            3
+        );
+
+        $objectData = $object->getProperties();
+        $this->assertEquals($expectedData, json_encode($objectData));
     }
 
     public function testParseObjectRequirementProperty()
