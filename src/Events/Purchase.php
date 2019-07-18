@@ -99,6 +99,18 @@ class Purchase implements EventInterface
     protected $shippingCity;
 
 
+    /**
+     * Purchase constructor.
+     * @param CustomerIdInterface $customerIds
+     * @param string $category
+     * @param string $action
+     * @param array $productIds
+     * @param array $productList
+     * @param int $purchaseId
+     * @param string $purchaseStatus
+     * @param float $totalPrice
+     * @param int $totalQuantity
+     */
     public function __construct(
         CustomerIdInterface $customerIds,
         string $category,
@@ -111,18 +123,22 @@ class Purchase implements EventInterface
         int $totalQuantity
     )
     {
-        $this->customerIds = $customerIds;
-        $this->category = $category;
-        $this->action = $action;
-        $this->productIds = $productIds;
-        $this->purchaseId = $purchaseId;
-        $this->purchaseStatus = $purchaseStatus;
-        $this->totalPrice = $totalPrice;
-        $this->totalQuantity = $totalQuantity;
+        $this->setCustomerIds($customerIds);
+        $this->setCategory($category);
+        $this->setAction($action);
+        $this->setProductIds($productIds);
+        $this->setPurchaseId($purchaseId);
+        $this->setPurchaseStatus($purchaseStatus);
+        $this->setTotalPrice($totalPrice);
+        $this->setTotalQuantity($totalQuantity);
+        $this->setTimestamp(microtime(true));
 
-        foreach ($productList as $product) {
-            if (!$product instanceof Product) {
-                throw new \InvalidArgumentException('Items of $productList array must be instance of '.Product::class);
+        if ($productList != null) {
+            foreach ($productList as $product) {
+                if (!$product instanceof Product) {
+                    throw new \InvalidArgumentException('Items of $productList array must be instance of '.Product::class);
+                }
+                $this->addProduct($product);
             }
         }
     }
@@ -178,7 +194,7 @@ class Purchase implements EventInterface
     /**
      * @return string|null
      */
-    public function getVoucherCode(): string
+    public function getVoucherCode()
     {
         return $this->voucherCode;
     }
@@ -194,7 +210,7 @@ class Purchase implements EventInterface
     /**
      * @return int|null
      */
-    public function getVoucherPercentage(): int
+    public function getVoucherPercentage()
     {
         return $this->voucherPercentage;
     }
@@ -210,7 +226,7 @@ class Purchase implements EventInterface
     /**
      * @return int|null
      */
-    public function getVoucherValue(): int
+    public function getVoucherValue()
     {
         return $this->voucherValue;
     }
@@ -270,7 +286,7 @@ class Purchase implements EventInterface
     /**
      * @return string|null
      */
-    public function getPaymentType(): string
+    public function getPaymentType()
     {
         return $this->paymentType;
     }
@@ -286,7 +302,7 @@ class Purchase implements EventInterface
     /**
      * @return string|null
      */
-    public function getShippingType(): string
+    public function getShippingType()
     {
         return $this->shippingType;
     }
@@ -302,7 +318,7 @@ class Purchase implements EventInterface
     /**
      * @return float|null
      */
-    public function getShippingCost(): float
+    public function getShippingCost()
     {
         return $this->shippingCost;
     }
@@ -318,7 +334,7 @@ class Purchase implements EventInterface
     /**
      * @return string|null
      */
-    public function getShippingCountry(): string
+    public function getShippingCountry()
     {
         return $this->shippingCountry;
     }
@@ -334,7 +350,7 @@ class Purchase implements EventInterface
     /**
      * @return string|null
      */
-    public function getShippingCity(): string
+    public function getShippingCity()
     {
         return $this->shippingCity;
     }

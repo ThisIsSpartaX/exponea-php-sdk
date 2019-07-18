@@ -3,6 +3,7 @@
 namespace Tauceti\ExponeaApiTest\Events;
 
 use PHPUnit\Framework\TestCase;
+use Tauceti\ExponeaApi\Events\Partials\RegisteredCustomer;
 use Tauceti\ExponeaApi\Events\PurchaseItem;
 use Tauceti\ExponeaApi\Interfaces\EventInterface;
 
@@ -10,11 +11,45 @@ class PurchaseItemTest extends TestCase
 {
     public function testInstanceOfEventInterface()
     {
-        $object = new PurchaseItem();
+        $object = new PurchaseItem(
+            new RegisteredCustomer('example@example.com'),
+            'a > b > c',
+            10,
+            30,
+            'closed',
+            3
+        );
         $this->assertInstanceOf(EventInterface::class, $object);
     }
 
-    public function testParseObjectProperty()
+    public function testParseObjectRequirementProperty()
+    {
+        $object = new PurchaseItem(
+            new RegisteredCustomer('example@example.com'),
+            'a > b > c',
+            10,
+            30,
+            'closed',
+            3
+        );
+
+        $expectedData = [
+            'purchase_id' => 3,
+            'purchase_status' => 'closed',
+            'quantity' => 30,
+            'categories_path' => ['a','b','c'],
+            'product_id' => 10,
+            'total_price' => 0,
+            'discount_percentage' => 0,
+            'discount_value' => 0.0
+        ];
+
+        $objectData  = $object->getProperties();
+
+        $this->assertEquals($expectedData, $objectData);
+    }
+
+        public function testParseObjectProperty()
     {
         $expectedData = [
             'purchase_id' => 3,
@@ -33,19 +68,24 @@ class PurchaseItemTest extends TestCase
                     'name' => 'YYY'
                 ]
             ],
-            'categories_path' => 'a > b > c',
+            'categories_path' => ['a','b','c'],
             'price' => 23.50,
             'original_price' => 22.39,
             'stock_level' => 999,
             'discount_percentage' => -4.0,
-            'discount_value' => -1.0
+            'discount_value' => -1.0,
+            'product_id' => 10
         ];
 
-        $object = new PurchaseItem();
+        $object = new PurchaseItem(
+            new RegisteredCustomer('example@example.com'),
+            'a > b > c',
+            10,
+            30,
+            'closed',
+            3
+        );
 
-        $object->setPurchaseId(3);
-        $object->setPurchaseStatus('closed');
-        $object->setQuantity(30);
         $object->setVariantId(33);
         $object->setTitle('abc');
         $object->setTags([
@@ -58,7 +98,6 @@ class PurchaseItemTest extends TestCase
                 'name' => 'YYY'
             ]
         ]);
-        $object->setCategoriesPath(['a','b','c']);
         $object->setPrice(23.50);
         $object->setOriginalPrice(22.39);
         $object->setStockLevel(999);

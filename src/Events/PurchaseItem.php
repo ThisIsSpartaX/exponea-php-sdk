@@ -24,7 +24,7 @@ class PurchaseItem implements EventInterface
     protected $price;
 
     /**
-     * @var string[]|
+     * @var string
      */
     protected $categoriesPath;
 
@@ -72,14 +72,7 @@ class PurchaseItem implements EventInterface
      * @var CustomerIdInterface
      */
     protected $customerIds;
-    /**
-     * @var string
-     */
-    protected $category;
-    /**
-     * @var string
-     */
-    protected $action;
+
     /**
      * @var float|null
      */
@@ -88,6 +81,24 @@ class PurchaseItem implements EventInterface
      * @var float
      */
     protected $timestamp;
+
+    public function __construct(
+        CustomerIdInterface $customerIds,
+        string $categoriesPath,
+        int $productId,
+        int $quantity,
+        string $purchaseStatus,
+        int $purchaseId
+    )
+    {
+        $this->setCustomerIds($customerIds);
+        $this->setCategoriesPath($categoriesPath);
+        $this->setProductId($productId);
+        $this->setQuantity($quantity);
+        $this->setPurchaseStatus($purchaseStatus);
+        $this->setPurchaseId($purchaseId);
+        $this->setValidUntil(microtime(true));
+    }
 
     /**
      * @return CustomerIdInterface
@@ -103,38 +114,6 @@ class PurchaseItem implements EventInterface
     public function setCustomerIds(CustomerIdInterface $customerIds)
     {
         $this->customerIds = $customerIds;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCategory(): string
-    {
-        return $this->category;
-    }
-
-    /**
-     * @param string $category
-     */
-    public function setCategory(string $category)
-    {
-        $this->category = $category;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAction(): string
-    {
-        return $this->action;
-    }
-
-    /**
-     * @param string $action
-     */
-    public function setAction(string $action)
-    {
-        $this->action = $action;
     }
 
     /**
@@ -227,17 +206,17 @@ class PurchaseItem implements EventInterface
     }
 
     /**
-     * @return string[]
+     * @return string
      */
-    public function getCategoriesPath(): array
+    public function getCategoriesPath(): string
     {
         return $this->categoriesPath;
     }
 
     /**
-     * @param string[] $categoriesPath
+     * @param string $categoriesPath
      */
-    public function setCategoriesPath(array $categoriesPath)
+    public function setCategoriesPath(string $categoriesPath)
     {
         $this->categoriesPath = $categoriesPath;
     }
@@ -368,10 +347,11 @@ class PurchaseItem implements EventInterface
             'variant_id' => $this->getVariantId(),
             'title' => $this->getTitle(),
             'tags' => $this->getTags() !== null ? $this->getTags() : null,
-            'categories_path' => empty($this->getCategoriesPath()) ? null : implode(' > ', $this->getCategoriesPath()),
+            'categories_path' => empty($this->getCategoriesPath()) ? null : explode(' > ', $this->getCategoriesPath()),
             'price' => $this->getPrice(),
             'original_price' => $this->getOriginalPrice(),
             'stock_level' => $this->getStockLevel(),
+            'product_id' => $this->getProductId()
         ];
 
         if ($data['price'] != $data['original_price'] && $data['original_price'] != 0) {
@@ -396,7 +376,7 @@ class PurchaseItem implements EventInterface
     /**
      * @return int|null
      */
-    public function getVariantId(): int
+    public function getVariantId()
     {
         return $this->variantId;
     }
