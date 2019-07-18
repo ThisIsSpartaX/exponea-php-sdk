@@ -87,7 +87,9 @@ class PurchaseTest extends TestCase
                 'voucher_value' => 10.01,
                 'voucher_percentage' => 34.01,
             ],
-            $properties
+            $properties,
+            'Invalid properties generated (after json serialization)',
+            0.01
         );
     }
 

@@ -30,7 +30,9 @@ class ConsentTest extends TestCase
                 'valid_until' => 'unlimited',
             ],
             $properties,
-            'Event data does not match expected one'
+            'Event data does not match expected one',
+            'Invalid properties generated (after json serialization)',
+            0.01
         );
     }
 
