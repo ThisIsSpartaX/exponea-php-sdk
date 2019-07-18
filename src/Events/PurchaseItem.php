@@ -89,8 +89,7 @@ class PurchaseItem implements EventInterface
         int $quantity,
         string $purchaseStatus,
         int $purchaseId
-    )
-    {
+    ) {
         $this->setCustomerIds($customerIds);
         $this->setCategoriesPath($categoriesPath);
         $this->setProductId($productId);

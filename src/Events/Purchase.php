@@ -2,6 +2,7 @@
 
 namespace Tauceti\ExponeaApi\Events;
 
+use InvalidArgumentException;
 use JsonSerializable;
 use Tauceti\ExponeaApi\Events\Partials\Product;
 use Tauceti\ExponeaApi\Interfaces\CustomerIdInterface;
@@ -121,8 +122,7 @@ class Purchase implements EventInterface
         string $purchaseStatus,
         float $totalPrice,
         int $totalQuantity
-    )
-    {
+    ) {
         $this->setCustomerIds($customerIds);
         $this->setCategory($category);
         $this->setAction($action);
@@ -136,7 +136,9 @@ class Purchase implements EventInterface
         if ($productList != null) {
             foreach ($productList as $product) {
                 if (!$product instanceof Product) {
-                    throw new \InvalidArgumentException('Items of $productList array must be instance of '.Product::class);
+                    throw new InvalidArgumentException(
+                        'Items of $productList array must be instance of ' . Product::class
+                    );
                 }
                 $this->addProduct($product);
             }
@@ -485,7 +487,8 @@ class Purchase implements EventInterface
     /**
      * @param Product $product
      */
-    public function addProduct(Product $product) {
+    public function addProduct(Product $product)
+    {
         $this->productList[] = $product;
     }
 }

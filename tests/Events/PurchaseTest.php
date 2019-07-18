@@ -19,7 +19,7 @@ class PurchaseTest extends TestCase
             [123,345,567,891],
             [
                 new Product(3, 20),
-                new Product(4,30)
+                new Product(4, 30)
             ],
             3,
             'closed',
@@ -29,7 +29,8 @@ class PurchaseTest extends TestCase
         $this->assertInstanceOf(EventInterface::class, $object);
     }
 
-    public function testParseObjectRequirementProperty() {
+    public function testParseObjectRequirementProperty()
+    {
         $expectedData = [
             'purchase_id' => 3,
             'purchase_status' => 'closed',
@@ -57,7 +58,7 @@ class PurchaseTest extends TestCase
             [123,345,567,891],
             [
                 new Product(3, 20),
-                new Product(4,30)
+                new Product(4, 30)
             ],
             3,
             'closed',
@@ -98,7 +99,7 @@ class PurchaseTest extends TestCase
             [123,345,567,891],
             [
                 new Product(3, 20),
-                new Product(4,30)
+                new Product(4, 30)
             ],
             3,
             'closed',

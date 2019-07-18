@@ -49,32 +49,32 @@ class PurchaseItemTest extends TestCase
         $this->assertEquals($expectedData, $objectData);
     }
 
-        public function testParseObjectProperty()
+    public function testParseObjectProperty()
     {
         $expectedData = [
-            'purchase_id' => 3,
-            'purchase_status' => 'closed',
-            'quantity' => 30,
-            'total_price' => 705.0,
-            'variant_id' => 33,
-            'title' => 'abc',
-            'tags' => [
-                [
-                    'id' => 3,
-                    'name' => 'ZZZ'
-                ],
-                [
-                    'id' => 4,
-                    'name' => 'YYY'
-                ]
+        'purchase_id' => 3,
+        'purchase_status' => 'closed',
+        'quantity' => 30,
+        'total_price' => 705.0,
+        'variant_id' => 33,
+        'title' => 'abc',
+        'tags' => [
+            [
+                'id' => 3,
+                'name' => 'ZZZ'
             ],
-            'categories_path' => ['a','b','c'],
-            'price' => 23.50,
-            'original_price' => 22.39,
-            'stock_level' => 999,
-            'discount_percentage' => -4.0,
-            'discount_value' => -1.0,
-            'product_id' => 10
+            [
+                'id' => 4,
+                'name' => 'YYY'
+            ]
+        ],
+        'categories_path' => ['a','b','c'],
+        'price' => 23.50,
+        'original_price' => 22.39,
+        'stock_level' => 999,
+        'discount_percentage' => -4.0,
+        'discount_value' => -1.0,
+        'product_id' => 10
         ];
 
         $object = new PurchaseItem(
@@ -89,14 +89,14 @@ class PurchaseItemTest extends TestCase
         $object->setVariantId(33);
         $object->setTitle('abc');
         $object->setTags([
-            [
-                'id' => 3,
-                'name' => 'ZZZ'
-            ],
-            [
-                'id' => 4,
-                'name' => 'YYY'
-            ]
+        [
+            'id' => 3,
+            'name' => 'ZZZ'
+        ],
+        [
+            'id' => 4,
+            'name' => 'YYY'
+        ]
         ]);
         $object->setPrice(23.50);
         $object->setOriginalPrice(22.39);

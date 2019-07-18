@@ -3,11 +3,13 @@
 
 namespace Tauceti\ExponeaApi\Events\Partials;
 
+use JsonSerializable;
+
 /**
  * Entity class for single item of product_list array
  * @package Tauceti\ExponeaApi\Events\Partials
  */
-class Product implements \JsonSerializable
+class Product implements JsonSerializable
 {
     /**
      * @var int
