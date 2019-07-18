@@ -5,43 +5,23 @@ namespace Tauceti\ExponeaApi\Events\Traits;
 trait PurchaseIdentificationTrait
 {
     /**
-     * @var int
-     */
-    protected $purchaseId;
-    /**
      * @var string
      */
-    protected $purchaseStatus;
-
-    /**
-     * @return int
-     */
-    public function getPurchaseId(): int
-    {
-        return $this->purchaseId;
-    }
-
-    /**
-     * @param int $purchaseId
-     */
-    public function setPurchaseId(int $purchaseId)
-    {
-        $this->purchaseId = $purchaseId;
-    }
+    protected $purchaseID;
 
     /**
      * @return string
      */
-    public function getPurchaseStatus(): string
+    public function getPurchaseID(): string
     {
-        return $this->purchaseStatus;
+        return $this->purchaseID;
     }
 
     /**
-     * @param string $purchaseStatus
+     * @param string $purchaseID
      */
-    public function setPurchaseStatus(string $purchaseStatus)
+    public function setPurchaseID(string $purchaseID)
     {
-        $this->purchaseStatus = $purchaseStatus;
+        $this->purchaseID = $purchaseID;
     }
 }
