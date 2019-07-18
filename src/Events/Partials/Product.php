@@ -4,6 +4,8 @@
 namespace Tauceti\ExponeaApi\Events\Partials;
 
 use JsonSerializable;
+use Tauceti\ExponeaApi\Events\Traits\ProductIdentificationTrait;
+use Tauceti\ExponeaApi\Events\Traits\QuantityTrait;
 
 /**
  * Entity class for single item of product_list array
@@ -11,19 +13,13 @@ use JsonSerializable;
  */
 class Product implements JsonSerializable
 {
-    /**
-     * @var int
-     */
-    private $id;
-    /**
-     * @var int
-     */
-    private $quantity;
+    use ProductIdentificationTrait;
+    use QuantityTrait;
 
     public function __construct(int $id, int $quantity)
     {
-        $this->id = $id;
-        $this->quantity = $quantity;
+        $this->setProductId($id);
+        $this->setQuantity($quantity);
     }
 
     /**
@@ -32,40 +28,8 @@ class Product implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'product_id' => $this->getId(),
+            'product_id' => $this->getProductId(),
             'quantity' => $this->getQuantity()
         ];
-    }
-
-    /**
-     * @return int
-     */
-    public function getQuantity(): int
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * @param int $quantity
-     */
-    public function setQuantity(int $quantity)
-    {
-        $this->quantity = $quantity;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id)
-    {
-        $this->id = $id;
     }
 }

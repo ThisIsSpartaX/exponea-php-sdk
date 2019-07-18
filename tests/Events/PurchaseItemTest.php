@@ -15,7 +15,7 @@ class PurchaseItemTest extends TestCase
     {
         $object = new PurchaseItem(
             new RegisteredCustomer('example@example.com'),
-            'a > b > c',
+            ['a', 'b', 'c'],
             10,
             30,
             'closed',
@@ -31,7 +31,7 @@ class PurchaseItemTest extends TestCase
 
         $object = new PurchaseItem(
             new RegisteredCustomer('example@example.com'),
-            'a > b > c',
+            ['a', 'b', 'c'],
             10,
             30,
             'closed',
@@ -46,7 +46,7 @@ class PurchaseItemTest extends TestCase
     {
         $object = new PurchaseItem(
             new RegisteredCustomer('example@example.com'),
-            'a > b > c',
+            ['a', 'b', 'c'],
             10,
             30,
             'closed',
@@ -99,7 +99,7 @@ class PurchaseItemTest extends TestCase
 
         $object = new PurchaseItem(
             new RegisteredCustomer('example@example.com'),
-            'a > b > c',
+            ['a', 'b', 'c'],
             10,
             30,
             'closed',

@@ -5,6 +5,10 @@ namespace Tauceti\ExponeaApi\Events;
 use InvalidArgumentException;
 use JsonSerializable;
 use Tauceti\ExponeaApi\Events\Partials\Product;
+use Tauceti\ExponeaApi\Events\Traits\CategoryAndActionTrait;
+use Tauceti\ExponeaApi\Events\Traits\CustomerIdTrait;
+use Tauceti\ExponeaApi\Events\Traits\PurchaseIdentificationTrait;
+use Tauceti\ExponeaApi\Events\Traits\TimestampTrait;
 use Tauceti\ExponeaApi\Interfaces\CustomerIdInterface;
 use Tauceti\ExponeaApi\Interfaces\EventInterface;
 
@@ -14,31 +18,10 @@ use Tauceti\ExponeaApi\Interfaces\EventInterface;
  */
 class Purchase implements EventInterface
 {
-    /**
-     * @var CustomerIdInterface
-     */
-    protected $customerIds;
-    /**
-     * @var string
-     */
-    protected $category;
-    /**
-     * @var string
-     */
-    protected $action;
-    /**
-     * @var float|null
-     */
-    protected $validUntil;
-    /**
-     * @var float
-     */
-    protected $timestamp;
-
-    /**
-     * @var array
-     */
-    protected $productIds = [];
+    use CustomerIdTrait;
+    use TimestampTrait;
+    use CategoryAndActionTrait;
+    use PurchaseIdentificationTrait;
 
     /**
      * @var array
@@ -46,20 +29,9 @@ class Purchase implements EventInterface
     protected $productList;
 
     /**
-     * @var int
-     */
-    protected $purchaseId;
-
-    /**
-     * @var string
-     */
-    protected $purchaseStatus;
-
-    /**
      * @var float
      */
     protected $totalPrice;
-
     /**
      * @var int
      */
@@ -68,47 +40,36 @@ class Purchase implements EventInterface
     /**
      * @var string|null
      */
-
-    protected $voucherCode;
-
-    /**
-     * @var string|null
-     */
-
     protected $paymentType;
 
     /**
      * @var string|null
      */
     protected $shippingType;
-
     /**
      * @var float|null
      */
     protected $shippingCost;
-
     /**
      * @var string|null
      */
-
     protected $shippingCountry;
-
     /**
      * @var string|null
      */
-
     protected $shippingCity;
 
     /**
-     * @var int|null
+     * @var string|null
      */
-
-    protected $voucherPercentage;
-
+    protected $voucherCode;
     /**
      * @var int|null
      */
-
+    protected $voucherPercentage;
+    /**
+     * @var int|null
+     */
     protected $voucherValue;
 
     /**
@@ -149,38 +110,6 @@ class Purchase implements EventInterface
             }
             $this->addProduct($product);
         }
-    }
-
-    /**
-     * @return int
-     */
-    public function getPurchaseId(): int
-    {
-        return $this->purchaseId;
-    }
-
-    /**
-     * @param int $purchaseId
-     */
-    public function setPurchaseId(int $purchaseId)
-    {
-        $this->purchaseId = $purchaseId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPurchaseStatus(): string
-    {
-        return $this->purchaseStatus;
-    }
-
-    /**
-     * @param string $purchaseStatus
-     */
-    public function setPurchaseStatus(string $purchaseStatus)
-    {
-        $this->purchaseStatus = $purchaseStatus;
     }
 
     /**
@@ -245,38 +174,6 @@ class Purchase implements EventInterface
     public function setVoucherValue(int $voucherValue)
     {
         $this->voucherValue = $voucherValue;
-    }
-
-    /**
-     * @return CustomerIdInterface
-     */
-    public function getCustomerIds(): CustomerIdInterface
-    {
-        return $this->customerIds;
-    }
-
-    /**
-     * @param CustomerIdInterface $customerIds
-     */
-    public function setCustomerIds(CustomerIdInterface $customerIds)
-    {
-        $this->customerIds = $customerIds;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCategory(): string
-    {
-        return $this->category;
-    }
-
-    /**
-     * @param string $category
-     */
-    public function setCategory(string $category)
-    {
-        $this->category = $category;
     }
 
     /**
@@ -362,54 +259,6 @@ class Purchase implements EventInterface
     /**
      * @return string
      */
-    public function getAction(): string
-    {
-        return $this->action;
-    }
-
-    /**
-     * @param string $action
-     */
-    public function setAction(string $action)
-    {
-        $this->action = $action;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getValidUntil(): float
-    {
-        return $this->validUntil;
-    }
-
-    /**
-     * @param float|null $validUntil
-     */
-    public function setValidUntil(float $validUntil)
-    {
-        $this->validUntil = $validUntil;
-    }
-
-    /**
-     * @return float
-     */
-    public function getTimestamp(): float
-    {
-        return $this->timestamp;
-    }
-
-    /**
-     * @param float $timestamp
-     */
-    public function setTimestamp(float $timestamp)
-    {
-        $this->timestamp = $timestamp;
-    }
-
-    /**
-     * @return string
-     */
     public function getEventType(): string
     {
         return 'purchase';
@@ -447,17 +296,9 @@ class Purchase implements EventInterface
         $ids = [];
         foreach ($productList as $product) {
             /** @var Product $product */
-            $ids[] = $product->getId();
+            $ids[] = $product->getProductId();
         }
         return $ids;
-    }
-
-    /**
-     * @param array $productIds
-     */
-    public function setProductIds(array $productIds)
-    {
-        $this->productIds = $productIds;
     }
 
     /**

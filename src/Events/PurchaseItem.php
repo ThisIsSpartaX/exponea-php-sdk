@@ -3,35 +3,25 @@
 namespace Tauceti\ExponeaApi\Events;
 
 use JsonSerializable;
+use Tauceti\ExponeaApi\Events\Traits\CustomerIdTrait;
+use Tauceti\ExponeaApi\Events\Traits\ProductIdentificationTrait;
+use Tauceti\ExponeaApi\Events\Traits\PurchaseIdentificationTrait;
+use Tauceti\ExponeaApi\Events\Traits\QuantityTrait;
+use Tauceti\ExponeaApi\Events\Traits\TimestampTrait;
 use Tauceti\ExponeaApi\Interfaces\CustomerIdInterface;
 use Tauceti\ExponeaApi\Interfaces\EventInterface;
 
+/**
+ * Event of one item purchase (equal to one order row)
+ * @package Tauceti\ExponeaApi\Events
+ */
 class PurchaseItem implements EventInterface
 {
-    /**
-     * @var integer|null
-     */
-    protected $stockLevel;
-
-    /**
-     * @var float|null
-     */
-    protected $originalPrice;
-
-    /**
-     * @var float|null
-     */
-    protected $price;
-
-    /**
-     * @var string
-     */
-    protected $categoriesPath;
-
-    /**
-     * @var array|null
-     */
-    protected $tags;
+    use CustomerIdTrait;
+    use PurchaseIdentificationTrait;
+    use TimestampTrait;
+    use ProductIdentificationTrait;
+    use QuantityTrait;
 
     /**
      * @var string|null
@@ -44,47 +34,44 @@ class PurchaseItem implements EventInterface
     protected $variantId;
 
     /**
-     * @var int
+     * @var integer|null
      */
-    protected $productId;
+    protected $stockLevel;
 
+    /**
+     * @var float|null
+     */
+    protected $originalPrice;
+    /**
+     * @var float|null
+     */
+    protected $price;
     /**
      * @var int
      */
     protected $totalPrice;
 
     /**
-     * @var int
-     */
-    protected $quantity;
-
-    /**
      * @var string
      */
-    protected $purchaseStatus;
+    protected $categoriesPath;
+    /**
+     * @var array|null
+     */
+    protected $tags;
 
     /**
-     * @var int
+     * PurchaseItem constructor.
+     * @param CustomerIdInterface $customerIds
+     * @param string[] $categoriesPath
+     * @param int $productId
+     * @param int $quantity
+     * @param string $purchaseStatus
+     * @param int $purchaseId
      */
-    protected $purchaseId;
-
-    /**
-     * @var CustomerIdInterface
-     */
-    protected $customerIds;
-
-    /**
-     * @var float|null
-     */
-    protected $validUntil;
-    /**
-     * @var float
-     */
-    protected $timestamp;
-
     public function __construct(
         CustomerIdInterface $customerIds,
-        string $categoriesPath,
+        array $categoriesPath,
         int $productId,
         int $quantity,
         string $purchaseStatus,
@@ -96,55 +83,7 @@ class PurchaseItem implements EventInterface
         $this->setQuantity($quantity);
         $this->setPurchaseStatus($purchaseStatus);
         $this->setPurchaseId($purchaseId);
-        $this->setValidUntil(microtime(true));
-    }
-
-    /**
-     * @return CustomerIdInterface
-     */
-    public function getCustomerIds(): CustomerIdInterface
-    {
-        return $this->customerIds;
-    }
-
-    /**
-     * @param CustomerIdInterface $customerIds
-     */
-    public function setCustomerIds(CustomerIdInterface $customerIds)
-    {
-        $this->customerIds = $customerIds;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getValidUntil()
-    {
-        return $this->validUntil;
-    }
-
-    /**
-     * @param float|null $validUntil
-     */
-    public function setValidUntil(float $validUntil)
-    {
-        $this->validUntil = $validUntil;
-    }
-
-    /**
-     * @return float
-     */
-    public function getTimestamp(): float
-    {
-        return $this->timestamp;
-    }
-
-    /**
-     * @param float $timestamp
-     */
-    public function setTimestamp(float $timestamp)
-    {
-        $this->timestamp = $timestamp;
+        $this->setTimestamp(microtime(true));
     }
 
     /**
@@ -207,15 +146,15 @@ class PurchaseItem implements EventInterface
     /**
      * @return string
      */
-    public function getCategoriesPath(): string
+    public function getCategoriesPath(): array
     {
         return $this->categoriesPath;
     }
 
     /**
-     * @param string $categoriesPath
+     * @param string[] $categoriesPath
      */
-    public function setCategoriesPath(string $categoriesPath)
+    public function setCategoriesPath(array $categoriesPath)
     {
         $this->categoriesPath = $categoriesPath;
     }
@@ -255,22 +194,6 @@ class PurchaseItem implements EventInterface
     /**
      * @return int
      */
-    public function getProductId(): int
-    {
-        return $this->productId;
-    }
-
-    /**
-     * @param int $productId
-     */
-    public function setProductId(int $productId)
-    {
-        $this->productId = $productId;
-    }
-
-    /**
-     * @return int
-     */
     public function getTotalPrice(): int
     {
         return $this->totalPrice;
@@ -298,38 +221,6 @@ class PurchaseItem implements EventInterface
     public function setQuantity(int $quantity)
     {
         $this->quantity = $quantity;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPurchaseStatus()
-    {
-        return $this->purchaseStatus;
-    }
-
-    /**
-     * @param mixed $purchaseStatus
-     */
-    public function setPurchaseStatus($purchaseStatus)
-    {
-        $this->purchaseStatus = $purchaseStatus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPurchaseId(): int
-    {
-        return $this->purchaseId;
-    }
-
-    /**
-     * @param int $purchaseId
-     */
-    public function setPurchaseId(int $purchaseId)
-    {
-        $this->purchaseId = $purchaseId;
     }
 
     /**
