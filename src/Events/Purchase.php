@@ -99,6 +99,17 @@ class Purchase implements EventInterface
 
     protected $shippingCity;
 
+    /**
+     * @var int|null
+     */
+
+    protected $voucherPercentage;
+
+    /**
+     * @var int|null
+     */
+
+    protected $voucherValue;
 
     /**
      * Purchase constructor.
@@ -240,18 +251,6 @@ class Purchase implements EventInterface
     {
         $this->voucherValue = $voucherValue;
     }
-
-    /**
-     * @var int|null
-     */
-
-    protected $voucherPercentage;
-
-    /**
-     * @var int|null
-     */
-
-    protected $voucherValue;
 
     /**
      * @return CustomerIdInterface
