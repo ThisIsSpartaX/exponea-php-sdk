@@ -7,6 +7,7 @@ use Tauceti\ExponeaApi\Events\Traits\CustomerIdTrait;
 use Tauceti\ExponeaApi\Events\Traits\ItemIdentificationTrait;
 use Tauceti\ExponeaApi\Events\Traits\PurchaseIdentificationTrait;
 use Tauceti\ExponeaApi\Events\Traits\QuantityTrait;
+use Tauceti\ExponeaApi\Events\Traits\SourceTrait;
 use Tauceti\ExponeaApi\Events\Traits\TimestampTrait;
 use Tauceti\ExponeaApi\Interfaces\CustomerIdInterface;
 use Tauceti\ExponeaApi\Interfaces\EventInterface;
@@ -27,6 +28,7 @@ class PurchaseItem implements EventInterface
     use PriceTrait;
     use QuantityTrait;
     use StatusTrait;
+    use SourceTrait;
 
     /**
      * @var string
@@ -119,6 +121,7 @@ class PurchaseItem implements EventInterface
             'category_name' => $this->getCategory()->getName(),
             'quantity' => $this->getQuantity(),
             'total_price' => $this->getTotalPrice(),
+            'source' => $this->getSource()
         ];
     }
 }

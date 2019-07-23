@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use JsonSerializable;
 use Tauceti\ExponeaApi\Events\Traits\CustomerIdTrait;
 use Tauceti\ExponeaApi\Events\Traits\PurchaseIdentificationTrait;
+use Tauceti\ExponeaApi\Events\Traits\SourceTrait;
 use Tauceti\ExponeaApi\Events\Traits\TimestampTrait;
 use Tauceti\ExponeaApi\Interfaces\CustomerIdInterface;
 use Tauceti\ExponeaApi\Interfaces\EventInterface;
@@ -23,6 +24,7 @@ class Purchase implements EventInterface
     use TimestampTrait;
     use PurchaseIdentificationTrait;
     use StatusTrait;
+    use SourceTrait;
 
     /**
      * @var Partials/Product[]
@@ -153,6 +155,7 @@ class Purchase implements EventInterface
                 'total_price' => $this->getTotalPrice(),
                 'total_quantity' => $this->getTotalQuantity(),
                 'payment_method' => $this->getPaymentMethod(),
+                'source' => $this->getSource(),
                 'voucher_code' => $this->voucher === null ? null : $this->voucher->getCode(),
                 'voucher_percentage' => $this->voucher === null ? null : $this->voucher->getPercentage(),
                 'voucher_value' => $this->voucher === null ? null : $this->voucher->getValue(),
