@@ -42,6 +42,7 @@ class PurchaseTest extends TestCase
                 // not required by Exponea
                 'total_quantity' => 3,
                 'payment_method' => 'COD',
+                'source' => 'VPI'
             ],
             $properties,
             'Invalid properties generated (after json serialization)',
@@ -86,6 +87,7 @@ class PurchaseTest extends TestCase
                 'voucher_code' => 'VOUCHER-CODE',
                 'voucher_value' => 10.01,
                 'voucher_percentage' => 34.01,
+                'source' => 'VPI'
             ],
             $properties,
             'Invalid properties generated (after json serialization)',

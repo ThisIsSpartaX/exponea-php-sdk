@@ -40,6 +40,7 @@ class PurchaseItemTest extends TestCase
                 'category_name' => 'Some > Category > Breadcrumb',
                 'quantity' => 2,
                 'total_price' => 5.98,
+                'source' => 'VPI'
             ],
             $properties,
             'Invalid properties generated (after json serialization)',
