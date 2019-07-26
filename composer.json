@@ -2,16 +2,6 @@
     "name": "tauceti/exponea-php-sdk",
     "description": "PHP SDK for Exponea API",
     "type": "library",
-    "repositories": [
-        {
-            "type": "gitlab",
-            "url": "https://git.tauceti.tech/rutek/exponea-php-sdk"
-        },
-        {
-            "type": "git",
-            "url": "https://git.tauceti.tech/rutek/exponea-php-sdk.git"
-        }
-    ],
     "require": {
         "php" : "^7.0",
         "ext-json": "*",
