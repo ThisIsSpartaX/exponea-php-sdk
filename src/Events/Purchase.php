@@ -111,6 +111,14 @@ class Purchase implements EventInterface
         return $this->paymentMethod;
     }
 
+    /**
+     * @return Voucher|null
+     */
+    public function getVoucher()
+    {
+        return $this->voucher;
+    }
+
     public function getEventType(): string
     {
         return 'purchase';
