@@ -27,7 +27,7 @@ class Purchase implements EventInterface
     use SourceTrait;
 
     /**
-     * @var Partials/Product[]
+     * @var Item[]
      */
     protected $items = [];
     /**

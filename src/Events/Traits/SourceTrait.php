@@ -1,28 +1,26 @@
 <?php
 
-
 namespace Tauceti\ExponeaApi\Events\Traits;
-
 
 trait SourceTrait
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected $source = 'VPI';
+    protected $source = null;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSource(): string
+    public function getSource()
     {
         return $this->source;
     }
 
     /**
-     * @param string $source
+     * @param string|null $source
      */
-    public function setSource(string $source)
+    public function setSource(string $source = null)
     {
         $this->source = $source;
     }

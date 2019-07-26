@@ -41,8 +41,7 @@ class PurchaseTest extends TestCase
                 'total_price' => 8.99,
                 // not required by Exponea
                 'total_quantity' => 3,
-                'payment_method' => 'COD',
-                'source' => 'VPI'
+                'payment_method' => 'COD'
             ],
             $properties,
             'Invalid properties generated (after json serialization)',
@@ -86,8 +85,7 @@ class PurchaseTest extends TestCase
                 // voucher data which are not documentated in Exponea
                 'voucher_code' => 'VOUCHER-CODE',
                 'voucher_value' => 10.01,
-                'voucher_percentage' => 34.01,
-                'source' => 'VPI'
+                'voucher_percentage' => 34.01
             ],
             $properties,
             'Invalid properties generated (after json serialization)',
@@ -106,6 +104,30 @@ class PurchaseTest extends TestCase
                 ['item_id' => '12345', 'quantity' => 3],
             ],
             'COD'
+        );
+    }
+
+    public function testDataWithSource()
+    {
+        $obj = new Purchase(
+            new RegisteredCustomer('example@example.com'),
+            'PREFIX12345',
+            [
+                new Item('012345', 2.99, 1),
+                new Item('12345', 3, 2),
+            ],
+            'COD',
+            new Voucher('VOUCHER-CODE', 10.01, 34.01)
+        );
+        $obj->setSource('VPI');
+        $properties = json_decode(json_encode($obj->getProperties()), true);
+        $this->assertArraySubset(
+            [
+                'source' => 'VPI',
+            ],
+            $properties,
+            'Invalid properties generated (after json serialization)',
+            0.01
         );
     }
 }

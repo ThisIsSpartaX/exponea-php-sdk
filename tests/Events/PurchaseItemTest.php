@@ -39,8 +39,32 @@ class PurchaseItemTest extends TestCase
                 'category_id' => 'CAT1',
                 'category_name' => 'Some > Category > Breadcrumb',
                 'quantity' => 2,
-                'total_price' => 5.98,
-                'source' => 'VPI'
+                'total_price' => 5.98
+            ],
+            $properties,
+            'Invalid properties generated (after json serialization)',
+            0.01
+        );
+    }
+
+    public function testDataWithSource()
+    {
+        $obj = new PurchaseItem(
+            new RegisteredCustomer('example@example.com'),
+            'PREFIX12345',
+            '012345',
+            2.99,
+            2,
+            'SKU012345',
+            'Product name',
+            new Category('CAT1', 'Some > Category > Breadcrumb')
+        );
+        $obj->setSource('VPI');
+
+        $properties = json_decode(json_encode($obj->getProperties()), true);
+        $this->assertArraySubset(
+            [
+                'source' => 'VPI',
             ],
             $properties,
             'Invalid properties generated (after json serialization)',

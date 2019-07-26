@@ -110,18 +110,23 @@ class PurchaseItem implements EventInterface
      */
     public function getProperties()
     {
-        return [
-            'status' => $this->getStatus(),
-            'purchase_id' => $this->getPurchaseID(),
-            'item_id' => $this->getItemID(),
-            'item_price' => $this->getPrice(),
-            'item_sku' => $this->getSKU(),
-            'item_name' => $this->getName(),
-            'category_id' => $this->category->getID(),
-            'category_name' => $this->getCategory()->getName(),
-            'quantity' => $this->getQuantity(),
-            'total_price' => $this->getTotalPrice(),
-            'source' => $this->getSource()
-        ];
+        return array_filter(
+            [
+                'status' => $this->getStatus(),
+                'purchase_id' => $this->getPurchaseID(),
+                'item_id' => $this->getItemID(),
+                'item_price' => $this->getPrice(),
+                'item_sku' => $this->getSKU(),
+                'item_name' => $this->getName(),
+                'category_id' => $this->category->getID(),
+                'category_name' => $this->getCategory()->getName(),
+                'quantity' => $this->getQuantity(),
+                'total_price' => $this->getTotalPrice(),
+                'source' => $this->getSource()
+            ],
+            function ($value) {
+                return $value !== null;
+            }
+        );
     }
 }
