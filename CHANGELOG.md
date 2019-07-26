@@ -3,6 +3,7 @@
 **Version 0.0.5**
 
 - bugfix: "source" field for Purchase and PurchaseItem should be optional
+- bugfix: missing getVoucher method for Purchase event
 
 **Version 0.0.4**
 
