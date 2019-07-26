@@ -49,16 +49,7 @@ class PurchaseItemTest extends TestCase
 
     public function testDataWithSource()
     {
-        $obj = new PurchaseItem(
-            new RegisteredCustomer('example@example.com'),
-            'PREFIX12345',
-            '012345',
-            2.99,
-            2,
-            'SKU012345',
-            'Product name',
-            new Category('CAT1', 'Some > Category > Breadcrumb')
-        );
+        $obj = $this->getExampleObj();
         $obj->setSource('VPI');
 
         $properties = json_decode(json_encode($obj->getProperties()), true);
@@ -67,8 +58,40 @@ class PurchaseItemTest extends TestCase
                 'source' => 'VPI',
             ],
             $properties,
-            'Invalid properties generated (after json serialization)',
-            0.01
+            true,
+            'Invalid properties generated (after json serialization)'
+        );
+    }
+
+    public function testDataWithDiscount()
+    {
+        $obj = $this->getExampleObj();
+        $obj->setDiscountValue(14.99);
+        $obj->setDiscountPercentage(13.21);
+
+        $properties = json_decode(json_encode($obj->getProperties()), true);
+        $this->assertArraySubset(
+            [
+                'discount_value' => 14.99,
+                'discount_percentage' => 13.21,
+            ],
+            $properties,
+            true,
+            'Invalid properties generated (after json serialization)'
+        );
+    }
+
+    protected function getExampleObj(): PurchaseItem
+    {
+        return new PurchaseItem(
+            new RegisteredCustomer('example@example.com'),
+            'PREFIX12345',
+            '012345',
+            2.99,
+            2,
+            'SKU012345',
+            'Product name',
+            new Category('CAT1', 'Some > Category > Breadcrumb')
         );
     }
 }

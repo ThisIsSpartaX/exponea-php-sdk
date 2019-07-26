@@ -4,6 +4,7 @@ namespace Tauceti\ExponeaApi\Events;
 
 use JsonSerializable;
 use Tauceti\ExponeaApi\Events\Traits\CustomerIdTrait;
+use Tauceti\ExponeaApi\Events\Traits\DiscountTrait;
 use Tauceti\ExponeaApi\Events\Traits\ItemIdentificationTrait;
 use Tauceti\ExponeaApi\Events\Traits\PurchaseIdentificationTrait;
 use Tauceti\ExponeaApi\Events\Traits\QuantityTrait;
@@ -29,6 +30,7 @@ class PurchaseItem implements EventInterface
     use QuantityTrait;
     use StatusTrait;
     use SourceTrait;
+    use DiscountTrait;
 
     /**
      * @var string
@@ -122,7 +124,9 @@ class PurchaseItem implements EventInterface
                 'category_name' => $this->getCategory()->getName(),
                 'quantity' => $this->getQuantity(),
                 'total_price' => $this->getTotalPrice(),
-                'source' => $this->getSource()
+                'source' => $this->getSource(),
+                'discount_value' => $this->getDiscountValue(),
+                'discount_percentage' => $this->getDiscountPercentage(),
             ],
             function ($value) {
                 return $value !== null;

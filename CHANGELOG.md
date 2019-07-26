@@ -2,6 +2,7 @@
 
 **Version 0.0.5**
 
+- optional discount value and percentage fields for PurchaseItem event
 - bugfix: "source" field for Purchase and PurchaseItem should be optional
 - bugfix: missing getVoucher method for Purchase event
 
