@@ -83,3 +83,20 @@ try {
     $systemTime = $client->tracking()->getSystemTime()->wait(); // returns SystemTime object
 } catch (...) { ... }
 ```
+
+### Update customer properties
+
+```php
+try {
+    $properties = [
+        'fidelity_points' => 657,
+        'first_name' => 'Marian',
+    ];
+
+    $client->tracking()->updateCustomerProperties(
+                         new RegisteredCustomer('marian@exponea.com'), $properties
+                     )->wait();
+} catch (...) { ... }
+```
+
+With this method you can update customer properties. Required field in properties is 'first_name'.

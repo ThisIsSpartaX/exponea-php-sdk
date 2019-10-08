@@ -1,5 +1,9 @@
 # Changelog
 
+**Version 0.0.6**
+
+- new method added for update customer properties
+
 **Version 0.0.5**
 
 - optional discount value and percentage fields for PurchaseItem event

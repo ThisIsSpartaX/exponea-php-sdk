@@ -5,6 +5,7 @@ namespace Tauceti\ExponeaApi\Tracking;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
+use Tauceti\ExponeaApi\Events\Partials\RegisteredCustomer;
 use Tauceti\ExponeaApi\Exception\Internal\MissingResponseFieldException;
 use Tauceti\ExponeaApi\Exception\UnexpectedResponseSchemaException;
 use Tauceti\ExponeaApi\Interfaces\EventInterface;
@@ -82,6 +83,30 @@ class Methods
             [],
             json_encode($body)
         );
+        return $this->getClient()->call($request)->then(function () {
+            return null;
+        });
+    }
+
+    /**
+     * @param RegisteredCustomer $registeredCustomer
+     * @param array $properties
+     * @return PromiseInterface
+     */
+    public function updateCustomerProperties(RegisteredCustomer $registeredCustomer, array $properties)
+    {
+        $body = [
+            'customer_ids' => ['registered' => $registeredCustomer->getRegistered()],
+            'properties' => $properties,
+        ];
+
+        $request = new Request(
+            'POST',
+            '/track/v2/projects/{projectToken}/customers',
+            [],
+            json_encode($body)
+        );
+
         return $this->getClient()->call($request)->then(function () {
             return null;
         });
