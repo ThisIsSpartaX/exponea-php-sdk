@@ -130,4 +130,77 @@ class PurchaseTest extends TestCase
             0.01
         );
     }
+
+    public function testSetFidelityPointsGained()
+    {
+        $customerID = new RegisteredCustomer('example@example.com');
+        $obj = new Purchase(
+            $customerID,
+            'PREFIX12345',
+            [
+                new Item('012345', 2.99, 1),
+                new Item('12345', 3, 2),
+            ],
+            'COD'
+        );
+
+        $obj->setFidelityPointsGained(54);
+
+        $properties = json_decode(json_encode($obj->getProperties()), true);
+        $this->assertEquals(
+            [
+                'status' => 'success',
+                'items' => [
+                    // price field is not required by Exponea
+                    ['item_id' => '012345', 'price' => 2.99, 'quantity' => 1],
+                    ['item_id' => '12345', 'price' => 3.0, 'quantity' => 2],
+                ],
+                'purchase_id' => 'PREFIX12345',
+                'total_price' => 8.99,
+                // not required by Exponea
+                'total_quantity' => 3,
+                'payment_method' => 'COD',
+                'fidelity_points_gained' => 54
+            ],
+            $properties,
+            'Invalid properties generated (after json serialization)',
+            0.01
+        );
+    }
+
+    public function testSetFidelityPointsGainedWithNull()
+    {
+        $customerID = new RegisteredCustomer('example@example.com');
+        $obj = new Purchase(
+            $customerID,
+            'PREFIX12345',
+            [
+                new Item('012345', 2.99, 1),
+                new Item('12345', 3, 2),
+            ],
+            'COD'
+        );
+
+        $obj->setFidelityPointsGained(null);
+
+        $properties = json_decode(json_encode($obj->getProperties()), true);
+        $this->assertEquals(
+            [
+                'status' => 'success',
+                'items' => [
+                    // price field is not required by Exponea
+                    ['item_id' => '012345', 'price' => 2.99, 'quantity' => 1],
+                    ['item_id' => '12345', 'price' => 3.0, 'quantity' => 2],
+                ],
+                'purchase_id' => 'PREFIX12345',
+                'total_price' => 8.99,
+                // not required by Exponea
+                'total_quantity' => 3,
+                'payment_method' => 'COD'
+            ],
+            $properties,
+            'Invalid properties generated (after json serialization)',
+            0.01
+        );
+    }
 }
