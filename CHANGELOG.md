@@ -3,7 +3,6 @@
 **Version 0.0.6**
 
 - new method added for update customer properties
-- added new field fidelity_points_gained to Purchase event 
 
 **Version 0.0.5**
 
