@@ -47,3 +47,8 @@ $event = new PurchaseItem(
     new Category('CAT1', 'Some > Category > Breadcrumb')
 );
 var_dump($client->tracking()->addEvent($event)->wait());
+
+var_dump($client->tracking()->updateCustomerProperties(
+    new RegisteredCustomer('example@example.com'),
+    ['fidelity_points' => 35]
+)->wait());
