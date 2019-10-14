@@ -38,10 +38,6 @@ class Purchase implements EventInterface
      * @var Voucher|null
      */
     protected $voucher = null;
-    /**
-     * @var int|null
-     */
-    protected $fidelityPointsGained = null;
 
     public function __construct(
         CustomerIdInterface $customerIds,
@@ -155,22 +151,6 @@ class Purchase implements EventInterface
     }
 
     /**
-     * @return int|null
-     */
-    public function getFidelityPointsGained()
-    {
-        return $this->fidelityPointsGained;
-    }
-
-    /**
-     * @param int|null $fidelityPointsGained
-     */
-    public function setFidelityPointsGained($fidelityPointsGained)
-    {
-        $this->fidelityPointsGained = $fidelityPointsGained;
-    }
-
-    /**
      * @return array|JsonSerializable
      */
     public function getProperties()
@@ -187,7 +167,6 @@ class Purchase implements EventInterface
                 'voucher_code' => $this->voucher === null ? null : $this->voucher->getCode(),
                 'voucher_percentage' => $this->voucher === null ? null : $this->voucher->getPercentage(),
                 'voucher_value' => $this->voucher === null ? null : $this->voucher->getValue(),
-                'fidelity_points_gained' => $this->getFidelityPointsGained(),
             ],
             function ($value) {
                 return $value !== null;
