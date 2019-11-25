@@ -55,7 +55,7 @@ var_dump($client->tracking()->updateCustomerProperties(
 
 var_dump($client->tracking()->updateCustomerProperties(
     new RegisteredCustomer(
-        'lukasz.rutkowski@tauceti.email',
+        'example@example.com',
         ['card_id' => '111']
     ),
     []
