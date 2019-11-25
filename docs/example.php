@@ -52,3 +52,11 @@ var_dump($client->tracking()->updateCustomerProperties(
     new RegisteredCustomer('example@example.com'),
     ['fidelity_points' => 35]
 )->wait());
+
+var_dump($client->tracking()->updateCustomerProperties(
+    new RegisteredCustomer(
+        'lukasz.rutkowski@tauceti.email',
+        ['card_id' => '111']
+    ),
+    []
+)->wait());

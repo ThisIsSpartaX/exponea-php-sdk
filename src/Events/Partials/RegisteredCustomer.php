@@ -14,10 +14,15 @@ class RegisteredCustomer implements CustomerIdInterface
      * @var string
      */
     protected $email;
+    /**
+     * @var array|null
+     */
+    protected $softIDs = null;
 
-    public function __construct(string $email)
+    public function __construct(string $email, array $softIDs = null)
     {
         $this->setEmail($email);
+        $this->setSoftIDs($softIDs);
     }
 
     public function getRegistered()
@@ -44,5 +49,18 @@ class RegisteredCustomer implements CustomerIdInterface
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    /**
+     * @param array|null $softIDs
+     */
+    protected function setSoftIDs(array $softIDs = null)
+    {
+        $this->softIDs = $softIDs;
+    }
+
+    public function getSoftIDs()
+    {
+        return $this->softIDs;
     }
 }

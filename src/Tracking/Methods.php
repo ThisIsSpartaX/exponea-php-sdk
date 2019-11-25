@@ -5,9 +5,10 @@ namespace Tauceti\ExponeaApi\Tracking;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
-use Tauceti\ExponeaApi\Events\Partials\RegisteredCustomer;
+use stdClass;
 use Tauceti\ExponeaApi\Exception\Internal\MissingResponseFieldException;
 use Tauceti\ExponeaApi\Exception\UnexpectedResponseSchemaException;
+use Tauceti\ExponeaApi\Interfaces\CustomerIdInterface;
 use Tauceti\ExponeaApi\Interfaces\EventInterface;
 use Tauceti\ExponeaApi\Tracking\Response\SystemTime;
 use Tauceti\ExponeaApi\Traits\ApiContainerTrait;
@@ -89,14 +90,29 @@ class Methods
     }
 
     /**
-     * @param RegisteredCustomer $registeredCustomer
+     * @param CustomerIdInterface $customerID
      * @param array $properties
      * @return PromiseInterface
      */
-    public function updateCustomerProperties(RegisteredCustomer $registeredCustomer, array $properties)
+    public function updateCustomerProperties(CustomerIdInterface $customerID, array $properties)
     {
+        $customerIds = [];
+        if ($customerID->getRegistered() !== null) {
+            $customerIds['registered'] = $customerID->getRegistered();
+        }
+        if ($customerID->getCookie() !== null) {
+            $customerIds['cookie'] = $customerID->getCookie();
+        }
+        $customerIds = $customerIds + ($customerID->getSoftIDs() ?? []);
+
+        // Lets override empty array with stdclass so json_encode will create {} instead of []
+        // Exponea will reject requests with JSON arrays
+        if ($properties === []) {
+            $properties = new stdClass();
+        }
+
         $body = [
-            'customer_ids' => ['registered' => $registeredCustomer->getRegistered()],
+            'customer_ids' => $customerIds,
             'properties' => $properties,
         ];
 

@@ -18,4 +18,9 @@ interface CustomerIdInterface
      * @return string|null
      */
     public function getRegistered();
+    /**
+     * Get Soft IDs which should be exported to Exponea (f.x. card number)
+     * @return array|null
+     */
+    public function getSoftIDs();
 }
