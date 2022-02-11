@@ -28,17 +28,17 @@ class Voucher
         $this->setPercentage($percentage);
     }
 
-    public function setCode(string $value)
+    public function setCode(string $value): void
     {
         $this->code = $value;
     }
 
-    public function setValue(float $value)
+    public function setValue(float $value): void
     {
         $this->value = $value;
     }
 
-    public function setPercentage(float $value)
+    public function setPercentage(float $value): void
     {
         $this->percentage = $value;
     }

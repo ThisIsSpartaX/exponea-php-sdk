@@ -14,7 +14,7 @@ trait CustomerIdTrait
     /**
      * @param CustomerIdInterface $customerIds
      */
-    public function setCustomerIds(CustomerIdInterface $customerIds)
+    public function setCustomerIds(CustomerIdInterface $customerIds): void
     {
         $this->customerIds = $customerIds;
     }

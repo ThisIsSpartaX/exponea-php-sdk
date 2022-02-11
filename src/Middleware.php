@@ -2,7 +2,7 @@
 
 namespace Tauceti\ExponeaApi;
 
-use function GuzzleHttp\Psr7\stream_for;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Tauceti\ExponeaApi\Exception\NoPermissionException;
 use Tauceti\ExponeaApi\Exception\UnexpectedResponseSchemaException;
@@ -29,7 +29,7 @@ class Middleware
                             $response
                         );
                     }
-                    return $response->withBody(stream_for($body));
+                    return $response->withBody(Utils::streamFor($body));
                 });
             };
         };
@@ -55,7 +55,7 @@ class Middleware
                             $response
                         );
                     }
-                    return $response->withBody(stream_for($body));
+                    return $response->withBody(Utils::streamFor($body));
                 });
             };
         };
@@ -87,7 +87,7 @@ class Middleware
                             $response
                         );
                     }
-                    return $response->withBody(stream_for($body));
+                    return $response->withBody(Utils::streamFor($body));
                 });
             };
         };

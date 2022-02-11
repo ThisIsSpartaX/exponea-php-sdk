@@ -11,6 +11,7 @@ use Tauceti\ExponeaApi\Events\Traits\PriceTrait;
 /**
  * Entity class for single item of purchase items array
  * @package Tauceti\ExponeaApi\Events\Partials
+ * @phpstan-type ItemJson array{item_id: string, price: float, quantity: int}
  */
 class Item implements JsonSerializable
 {
@@ -26,8 +27,9 @@ class Item implements JsonSerializable
     }
 
     /**
-     * @return array|mixed
+     * @return ItemJson|mixed
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return [

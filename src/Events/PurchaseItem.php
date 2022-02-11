@@ -19,6 +19,21 @@ use Tauceti\ExponeaApi\Events\Traits\StatusTrait;
 /**
  * Event of one item purchase (equal to one order row)
  * @package Tauceti\ExponeaApi\Events
+ * @phpstan-type PurchaseItemJson array{
+ *  status: string,
+ *  purchase_id: string,
+ *  item_id: string,
+ *  item_price: float,
+ *  item_sku: string,
+ *  item_name: string,
+ *  category_id: string,
+ *  category_name: string,
+ *  quantity: int,
+ *  total_price: float,
+ *  source: string,
+ *  discount_value?: float,
+ *  discount_percentage?: float
+ * }
  */
 class PurchaseItem implements EventInterface
 {
@@ -66,17 +81,17 @@ class PurchaseItem implements EventInterface
         $this->setTimestamp(microtime(true));
     }
 
-    public function setSKU(string $sku)
+    public function setSKU(string $sku): void
     {
         $this->sku = $sku;
     }
 
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    public function setCategory(Category $category)
+    public function setCategory(Category $category): void
     {
         $this->category = $category;
     }
@@ -108,11 +123,12 @@ class PurchaseItem implements EventInterface
 
     /**
      * Get event properties
-     * @return array|JsonSerializable
+     * @return PurchaseItemJson
      */
     public function getProperties()
     {
-        return array_filter(
+        /** @var PurchaseItemJson */
+        $data = array_filter(
             [
                 'status' => $this->getStatus(),
                 'purchase_id' => $this->getPurchaseID(),
@@ -132,5 +148,6 @@ class PurchaseItem implements EventInterface
                 return $value !== null;
             }
         );
+        return $data;
     }
 }

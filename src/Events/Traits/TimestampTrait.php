@@ -12,7 +12,7 @@ trait TimestampTrait
     /**
      * @param float $timestamp
      */
-    public function setTimestamp(float $timestamp)
+    public function setTimestamp(float $timestamp): void
     {
         $this->timestamp = $timestamp;
     }

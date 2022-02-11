@@ -6,19 +6,21 @@ cache:
   paths:
     - vendor/
 
-test-php7.0:
+test-php7.4:
   stage: test
-  image: php:7.0-alpine
+  image: php:7.4-alpine
   script:
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php
     - php -r "unlink('composer-setup.php');"
     - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
     - php ./vendor/bin/phpunit -v --colors=never --stderr
+    - php vendor/bin/phpstan analyse --no-progress
+    - php vendor/bin/phpcs
 
-test-php7.0-highest-depdendencies:
+test-php7.4-highest-dependencies:
   stage: test
-  image: php:7.0-alpine
+  image: php:7.4-alpine
   script:
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php
@@ -26,20 +28,24 @@ test-php7.0-highest-depdendencies:
     - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
     - php composer.phar update --prefer-dist --no-ansi --no-interaction --no-progress
     - php ./vendor/bin/phpunit -v --colors=never --stderr
+    - php vendor/bin/phpstan analyse --no-progress
+    - php vendor/bin/phpcs
 
-test-php7-latest:
+test-php8.0:
   stage: test
-  image: php:7-alpine
+  image: php:8.0-alpine
   script:
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php
     - php -r "unlink('composer-setup.php');"
     - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
     - php ./vendor/bin/phpunit -v --colors=never --stderr
+    - php vendor/bin/phpstan analyse --no-progress
+    - php vendor/bin/phpcs
 
-test-php7-latest-highest-depdendencies:
+test-php8.0-highest-dependencies:
   stage: test
-  image: php:7-alpine
+  image: php:8.0-alpine
   script:
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php
@@ -47,3 +53,55 @@ test-php7-latest-highest-depdendencies:
     - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
     - php composer.phar update --prefer-dist --no-ansi --no-interaction --no-progress
     - php ./vendor/bin/phpunit -v --colors=never --stderr
+    - php vendor/bin/phpstan analyse --no-progress
+    - php vendor/bin/phpcs
+
+test-php8.1:
+  stage: test
+  image: php:8.1-alpine
+  script:
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php
+    - php -r "unlink('composer-setup.php');"
+    - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
+    - php ./vendor/bin/phpunit -v --colors=never --stderr
+    - php vendor/bin/phpstan analyse --no-progress
+    - php vendor/bin/phpcs
+
+test-php8.1-highest-dependencies:
+  stage: test
+  image: php:8.1-alpine
+  script:
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php
+    - php -r "unlink('composer-setup.php');"
+    - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
+    - php composer.phar update --prefer-dist --no-ansi --no-interaction --no-progress
+    - php ./vendor/bin/phpunit -v --colors=never --stderr
+    - php vendor/bin/phpstan analyse --no-progress
+    - php vendor/bin/phpcs
+
+test-php8-latest:
+  stage: test
+  image: php:8-alpine
+  script:
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php
+    - php -r "unlink('composer-setup.php');"
+    - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
+    - php ./vendor/bin/phpunit -v --colors=never --stderr
+    - php vendor/bin/phpstan analyse --no-progress
+    - php vendor/bin/phpcs
+
+test-php8-latest-highest-dependencies:
+  stage: test
+  image: php:8-alpine
+  script:
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php
+    - php -r "unlink('composer-setup.php');"
+    - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
+    - php composer.phar update --prefer-dist --no-ansi --no-interaction --no-progress
+    - php ./vendor/bin/phpunit -v --colors=never --stderr
+    - php vendor/bin/phpstan analyse --no-progress
+    - php vendor/bin/phpcs

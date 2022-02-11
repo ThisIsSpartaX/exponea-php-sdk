@@ -20,7 +20,7 @@ trait SourceTrait
     /**
      * @param string|null $source
      */
-    public function setSource(string $source = null)
+    public function setSource(?string $source = null): void
     {
         $this->source = $source;
     }

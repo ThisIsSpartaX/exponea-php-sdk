@@ -19,7 +19,7 @@ class SystemTime
 
     /**
      * SystemTime constructor.
-     * @param array $data
+     * @param array{time?: float} $data
      * @throws MissingResponseFieldException
      */
     public function __construct(array $data)
@@ -34,7 +34,7 @@ class SystemTime
     /**
      * @param float $time
      */
-    public function setTime(float $time)
+    public function setTime(float $time): void
     {
         $this->time = $time;
     }

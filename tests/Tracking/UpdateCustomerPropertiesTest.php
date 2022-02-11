@@ -37,16 +37,17 @@ class UpdateCustomerPropertiesTest extends TestCase
         );
 
         $body = json_decode($request->getBody()->getContents(), true);
-        $this->assertArraySubset(
-            [
-                'customer_ids' => ['registered' => $email],
-                'properties' => [
-                    'first_name' => 'Marian',
-                    'fidelity_points' => 687,
-                ],
-            ],
-            $body
-        );
+
+        $this->assertArrayHasKey('customer_ids', $body);
+        $this->assertSame(['registered' => $email], $body['customer_ids']);
+
+        $this->assertArrayHasKey('properties', $body);
+
+        $this->assertArrayHasKey('first_name', $body['properties']);
+        $this->assertSame('Marian', $body['properties']['first_name']);
+
+        $this->assertArrayHasKey('fidelity_points', $body['properties']);
+        $this->assertSame(687, $body['properties']['fidelity_points']);
     }
 
     public function testUpdateCustomerPropertiesSuccessFalse()
@@ -69,7 +70,7 @@ class UpdateCustomerPropertiesTest extends TestCase
         $client->tracking()->updateCustomerProperties(new RegisteredCustomer($email), $properties)->wait();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->mockHandler = null;
     }

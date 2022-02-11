@@ -24,7 +24,7 @@ class MissingResponseFieldException extends Exception
     /**
      * @param string $field
      */
-    protected function setField(string $field)
+    protected function setField(string $field): void
     {
         $this->field = $field;
     }

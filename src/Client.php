@@ -45,6 +45,7 @@ class Client
 
     const HTTP_CLIENT_OPT = 'http_client';
 
+    /** @param array<string,mixed> $options */
     public function __construct(array $options = null)
     {
         if (isset($options['endpoint_uri'])) {
@@ -90,7 +91,7 @@ class Client
                 $request->getUri()
                     ->withPath(str_replace(
                         urlencode('{projectToken}'),
-                        urlencode($this->getProjectToken()),
+                        urlencode($this->getProjectToken() ?? ''),
                         $request->getUri()->getPath()
                     ))
             );
@@ -154,7 +155,7 @@ class Client
      * @param string|null $privateKey
      * @return $this
      */
-    protected function setPrivateKey(string $privateKey = null)
+    protected function setPrivateKey(?string $privateKey = null)
     {
         $this->privateKey = $privateKey;
         return $this;
@@ -164,7 +165,7 @@ class Client
      * @param string|null $publicKey
      * @return $this
      */
-    protected function setPublicKey(string $publicKey = null)
+    protected function setPublicKey(?string $publicKey = null)
     {
         $this->publicKey = $publicKey;
         return $this;
@@ -173,7 +174,7 @@ class Client
     /**
      * @param string|null $projectToken
      */
-    protected function setProjectToken(string $projectToken = null)
+    protected function setProjectToken(?string $projectToken = null): void
     {
         $this->projectToken = $projectToken;
     }
@@ -189,7 +190,7 @@ class Client
     /**
      * @return string|null
      */
-    private function getPrivateKey(): string
+    private function getPrivateKey(): ?string
     {
         return $this->privateKey;
     }
@@ -197,7 +198,7 @@ class Client
     /**
      * @return string|null
      */
-    public function getPublicKey(): string
+    public function getPublicKey(): ?string
     {
         return $this->publicKey;
     }
@@ -205,7 +206,7 @@ class Client
     /**
      * @return string|null
      */
-    public function getProjectToken(): string
+    public function getProjectToken(): ?string
     {
         return $this->projectToken;
     }

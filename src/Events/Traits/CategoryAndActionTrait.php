@@ -16,7 +16,7 @@ trait CategoryAndActionTrait
     /**
      * @param string $category
      */
-    public function setCategory(string $category)
+    public function setCategory(string $category): void
     {
         $this->category = $category;
     }
@@ -24,7 +24,7 @@ trait CategoryAndActionTrait
     /**
      * @param string $action
      */
-    public function setAction(string $action)
+    public function setAction(string $action): void
     {
         $this->action = $action;
     }

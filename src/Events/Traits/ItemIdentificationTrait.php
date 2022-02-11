@@ -18,9 +18,9 @@ trait ItemIdentificationTrait
     }
 
     /**
-     * @param string $ItemID
+     * @param string $itemID
      */
-    public function setItemID(string $itemID)
+    public function setItemID(string $itemID): void
     {
         $this->itemID = $itemID;
     }

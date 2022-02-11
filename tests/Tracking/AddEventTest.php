@@ -48,23 +48,29 @@ class AddEventTest extends TestCase
             $request->getUri()
         );
         $body = json_decode($request->getBody()->getContents(), true);
-        $this->assertArraySubset(
-            [
-                'customer_ids' => ['registered' => self::EXAMPLE_EMAIL],
-                'event_type' => 'consent',
-                'properties' => [
-                    'action' => 'accept',
-                    'category' => Consent::CATEGORY_NEWSLETTER,
-                    'valid_until' => 'unlimited',
-                ],
-            ],
-            $body
-        );
-        $this->assertEquals(
+
+        $this->assertArrayHasKey('customer_ids', $body);
+        $this->assertSame(['registered' => self::EXAMPLE_EMAIL], $body['customer_ids']);
+
+        $this->assertArrayHasKey('event_type', $body);
+        $this->assertSame('consent', $body['event_type']);
+
+        $this->assertArrayHasKey('properties', $body);
+
+        $this->assertArrayHasKey('action', $body['properties']);
+        $this->assertSame('accept', $body['properties']['action']);
+
+        $this->assertArrayHasKey('category', $body['properties']);
+        $this->assertSame(Consent::CATEGORY_NEWSLETTER, $body['properties']['category']);
+
+        $this->assertArrayHasKey('valid_until', $body['properties']);
+        $this->assertSame('unlimited', $body['properties']['valid_until']);
+
+        $this->assertEqualsWithDelta(
             time(),
             $body['properties']['timestamp'],
-            'Default timestamp is not equal to current time',
-            2
+            2,
+            'Default timestamp is not equal to current time'
         );
     }
 
@@ -91,7 +97,7 @@ class AddEventTest extends TestCase
         $client->tracking()->addEvent($event)->wait();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->mockHandler = null;
     }

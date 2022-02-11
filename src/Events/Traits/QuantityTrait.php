@@ -20,7 +20,7 @@ trait QuantityTrait
     /**
      * @param int $quantity
      */
-    public function setQuantity(int $quantity)
+    public function setQuantity(int $quantity): void
     {
         $this->quantity = $quantity;
     }

@@ -12,7 +12,7 @@ trait StatusTrait
     /**
      * @param string $status
      */
-    public function setStatus(string $status)
+    public function setStatus(string $status): void
     {
         $this->status = $status;
     }

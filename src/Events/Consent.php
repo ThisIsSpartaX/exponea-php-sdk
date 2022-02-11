@@ -34,6 +34,7 @@ class Consent implements EventInterface
         $this->setTimestamp(microtime(true));
     }
 
+    /** @return array{action: string, category: string, timestamp: float, valid_until: string|float} */
     public function getProperties()
     {
         return [

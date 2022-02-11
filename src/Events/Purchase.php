@@ -17,6 +17,19 @@ use Tauceti\ExponeaApi\Events\Traits\StatusTrait;
 /**
  * Purchase event
  * @package Tauceti\ExponeaApi\Events
+ * @phpstan-import-type ItemJson from Item
+ * @phpstan-type PurchaseJson array{
+ *   status: string,
+ *   items: ItemJson[],
+ *   purchase_id: string,
+ *   total_price: float,
+ *   total_quantity: int,
+ *   payment_method: string,
+ *   source: string,
+ *   voucher_code?: string,
+ *   voucher_percentage?: float,
+ *   voucher_value?: float
+ * }
  */
 class Purchase implements EventInterface
 {
@@ -39,6 +52,7 @@ class Purchase implements EventInterface
      */
     protected $voucher = null;
 
+    /** @param Item[] $items */
     public function __construct(
         CustomerIdInterface $customerIds,
         string $purchaseID,
@@ -55,9 +69,9 @@ class Purchase implements EventInterface
     }
 
     /**
-     * @var Item[] $items
+     * @param Item[] $items
      */
-    public function setItems(array $items)
+    public function setItems(array $items): void
     {
         $this->items = [];
 
@@ -72,17 +86,17 @@ class Purchase implements EventInterface
     }
 
     /**
-     * @var Item $item
+     * @param Item $item
      */
-    public function addItem(Item $item)
+    public function addItem(Item $item): void
     {
         $this->items[] = $item;
     }
 
     /**
-     * @var Voucher|null $voucher
+     * @param Voucher|null $voucher
      */
-    public function setVoucher(Voucher $voucher = null)
+    public function setVoucher(?Voucher $voucher = null): void
     {
         $this->voucher = $voucher;
     }
@@ -90,7 +104,7 @@ class Purchase implements EventInterface
     /**
      * @param string $paymentMethod
      */
-    public function setPaymentMethod(string $paymentMethod)
+    public function setPaymentMethod(string $paymentMethod): void
     {
         $this->paymentMethod = $paymentMethod;
     }
@@ -151,11 +165,12 @@ class Purchase implements EventInterface
     }
 
     /**
-     * @return array|JsonSerializable
+     * @return PurchaseJson
      */
     public function getProperties()
     {
-        return array_filter(
+        /** @var PurchaseJson */
+        $data = array_filter(
             [
                 'status' => $this->getStatus(),
                 'items' => $this->getItems(),
@@ -172,5 +187,6 @@ class Purchase implements EventInterface
                 return $value !== null;
             }
         );
+        return $data;
     }
 }
