@@ -1,6 +1,6 @@
 # Changelog
 
-**Version 0.0.7**
+**Version 1.0.0**
 
 - added support for PHP 8.x, bumped minimal version to 7.4
 - added support for Guzzle 7.x
