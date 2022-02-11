@@ -29,6 +29,7 @@ class Item implements JsonSerializable
     /**
      * @return ItemJson|mixed
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return [
