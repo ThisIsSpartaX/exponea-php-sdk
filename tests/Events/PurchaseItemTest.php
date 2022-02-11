@@ -25,7 +25,7 @@ class PurchaseItemTest extends TestCase
 
         $this->assertSame($customerID, $obj->getCustomerIds());
         $this->assertSame('purchase_item', $obj->getEventType());
-        $this->assertEquals(microtime(true), $obj->getTimestamp(), 'Timestamp is not generated properly', 1);
+        $this->assertEqualsWithDelta(microtime(true), $obj->getTimestamp(), 1, 'Timestamp is not generated properly');
 
         $properties = json_decode(json_encode($obj->getProperties()), true);
         $this->assertEquals(
@@ -53,14 +53,8 @@ class PurchaseItemTest extends TestCase
         $obj->setSource('VPI');
 
         $properties = json_decode(json_encode($obj->getProperties()), true);
-        $this->assertArraySubset(
-            [
-                'source' => 'VPI',
-            ],
-            $properties,
-            true,
-            'Invalid properties generated (after json serialization)'
-        );
+        $this->assertArrayHasKey('source', $properties);
+        $this->assertSame('VPI', $properties['source']);
     }
 
     public function testDataWithDiscount()
@@ -70,15 +64,12 @@ class PurchaseItemTest extends TestCase
         $obj->setDiscountPercentage(13.21);
 
         $properties = json_decode(json_encode($obj->getProperties()), true);
-        $this->assertArraySubset(
-            [
-                'discount_value' => 14.99,
-                'discount_percentage' => 13.21,
-            ],
-            $properties,
-            true,
-            'Invalid properties generated (after json serialization)'
-        );
+
+        $this->assertArrayHasKey('discount_value', $properties);
+        $this->assertSame(14.99, $properties['discount_value']);
+
+        $this->assertArrayHasKey('discount_percentage', $properties);
+        $this->assertSame(13.21, $properties['discount_percentage']);
     }
 
     protected function getExampleObj(): PurchaseItem

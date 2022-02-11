@@ -12,7 +12,7 @@ trait ValidUntilTrait
     /**
      * @param float|null $validUntil
      */
-    public function setValidUntil(float $validUntil)
+    public function setValidUntil(?float $validUntil): void
     {
         $this->validUntil = $validUntil;
     }
@@ -20,7 +20,7 @@ trait ValidUntilTrait
     /**
      * @return float|null
      */
-    public function getValidUntil()
+    public function getValidUntil(): ?float
     {
         return $this->validUntil;
     }

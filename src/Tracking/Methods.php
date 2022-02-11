@@ -21,7 +21,7 @@ class Methods
 {
     use ApiContainerTrait;
 
-    protected function getMethodUri(string $method)
+    protected function getMethodUri(string $method): string
     {
         return '/track/v2/projects/' . $this->getClient()->getProjectToken() . $method;
     }
@@ -82,7 +82,7 @@ class Methods
             'POST',
             '/track/v2/projects/{projectToken}/customers/events',
             [],
-            json_encode($body)
+            json_encode($body) ?: '{}'
         );
         return $this->getClient()->call($request)->then(function () {
             return null;
@@ -91,7 +91,7 @@ class Methods
 
     /**
      * @param CustomerIdInterface $customerID
-     * @param array $properties
+     * @param array<string,mixed> $properties
      * @return PromiseInterface
      */
     public function updateCustomerProperties(CustomerIdInterface $customerID, array $properties)
@@ -120,7 +120,7 @@ class Methods
             'POST',
             '/track/v2/projects/{projectToken}/customers',
             [],
-            json_encode($body)
+            json_encode($body) ?: '{}'
         );
 
         return $this->getClient()->call($request)->then(function () {

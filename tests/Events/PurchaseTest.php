@@ -26,27 +26,36 @@ class PurchaseTest extends TestCase
 
         $this->assertSame($customerID, $obj->getCustomerIds());
         $this->assertSame('purchase', $obj->getEventType());
-        $this->assertEquals(microtime(true), $obj->getTimestamp(), 'Timestamp is not generated properly', 1);
+        $this->assertEqualsWithDelta(microtime(true), $obj->getTimestamp(), 1, 'Timestamp is not generated properly');
 
         $properties = json_decode(json_encode($obj->getProperties()), true);
-        $this->assertEquals(
+
+        $this->assertArrayHasKey('status', $properties);
+        $this->assertSame('success', $properties['status']);
+
+        $this->assertArrayHasKey('items', $properties);
+        $this->assertSame(
             [
-                'status' => 'success',
-                'items' => [
-                    // price field is not required by Exponea
-                    ['item_id' => '012345', 'price' => 2.99, 'quantity' => 1],
-                    ['item_id' => '12345', 'price' => 3.0, 'quantity' => 2],
-                ],
-                'purchase_id' => 'PREFIX12345',
-                'total_price' => 8.99,
-                // not required by Exponea
-                'total_quantity' => 3,
-                'payment_method' => 'COD'
+                // price field is not required by Exponea
+                ['item_id' => '012345', 'price' => 2.99, 'quantity' => 1],
+                ['item_id' => '12345', 'price' => 3, 'quantity' => 2],
             ],
-            $properties,
-            'Invalid properties generated (after json serialization)',
-            0.01
+            $properties['items']
         );
+
+        $this->assertArrayHasKey('purchase_id', $properties);
+        $this->assertSame('PREFIX12345', $properties['purchase_id']);
+
+        $this->assertArrayHasKey('total_price', $properties);
+        $this->assertSame(8.99, $properties['total_price']);
+
+        // not required by Exponea
+        $this->assertArrayHasKey('total_quantity', $properties);
+        $this->assertSame(3, $properties['total_quantity']);
+
+        // not required by Exponea
+        $this->assertArrayHasKey('payment_method', $properties);
+        $this->assertSame('COD', $properties['payment_method']);
     }
 
     public function testWithCustomData()
@@ -66,7 +75,7 @@ class PurchaseTest extends TestCase
 
         $this->assertSame($customerID, $obj->getCustomerIds());
         $this->assertSame('purchase', $obj->getEventType());
-        $this->assertEquals(microtime(true), $obj->getTimestamp(), 'Timestamp is not generated properly', 1);
+        $this->assertEqualsWithDelta(microtime(true), $obj->getTimestamp(), 1, 'Timestamp is not generated properly');
 
         $properties = json_decode(json_encode($obj->getProperties()), true);
         $this->assertEquals(
@@ -121,13 +130,8 @@ class PurchaseTest extends TestCase
         );
         $obj->setSource('VPI');
         $properties = json_decode(json_encode($obj->getProperties()), true);
-        $this->assertArraySubset(
-            [
-                'source' => 'VPI',
-            ],
-            $properties,
-            'Invalid properties generated (after json serialization)',
-            0.01
-        );
+
+        $this->assertArrayHasKey('source', $properties);
+        $this->assertSame('VPI', $properties['source']);
     }
 }

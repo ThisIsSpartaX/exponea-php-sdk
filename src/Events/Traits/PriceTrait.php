@@ -10,9 +10,9 @@ trait PriceTrait
     protected $price;
 
     /**
-     * @var float $price
+     * @param float $price
      */
-    public function setPrice(float $price)
+    public function setPrice(float $price): void
     {
         $this->price = $price;
     }

@@ -19,7 +19,7 @@ class ConsentTest extends TestCase
 
         $this->assertSame($customerID, $obj->getCustomerIds());
         $this->assertSame('consent', $obj->getEventType());
-        $this->assertEquals(microtime(true), $obj->getTimestamp(), 'Timestamp is not generated properly', 1);
+        $this->assertEqualsWithDelta(microtime(true), $obj->getTimestamp(), 1, 'Timestamp is not generated properly');
 
         $properties = json_decode(json_encode($obj->getProperties()), true);
         $this->assertEquals(
@@ -48,7 +48,7 @@ class ConsentTest extends TestCase
 
         $this->assertSame($customerID, $obj->getCustomerIds());
         $this->assertSame('consent', $obj->getEventType());
-        $this->assertEquals(microtime(true), $obj->getTimestamp(), 'Timestamp is not generated properly', 1);
+        $this->assertEqualsWithDelta(microtime(true), $obj->getTimestamp(), 1, 'Timestamp is not generated properly');
 
         $properties = json_decode(json_encode($obj->getProperties()), true);
         $this->assertEquals(

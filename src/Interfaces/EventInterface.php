@@ -29,7 +29,7 @@ interface EventInterface
     public function getTimestamp(): float;
     /**
      * Get event properties
-     * @return array|JsonSerializable
+     * @return array<mixed>|JsonSerializable
      */
     public function getProperties();
 }

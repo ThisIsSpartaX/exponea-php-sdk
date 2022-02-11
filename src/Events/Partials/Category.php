@@ -23,12 +23,12 @@ class Category
         $this->setName($name);
     }
 
-    public function setID(string $id)
+    public function setID(string $id): void
     {
         $this->id = $id;
     }
 
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }

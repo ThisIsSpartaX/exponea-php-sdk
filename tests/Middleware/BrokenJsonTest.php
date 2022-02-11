@@ -45,7 +45,7 @@ class BrokenJsonTest extends TestCase
         ];
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->mockHandler = null;
     }

@@ -16,7 +16,7 @@ trait DiscountTrait
     /**
      * @param float|null $discountPercentage
      */
-    public function setDiscountPercentage(float $discountPercentage = null)
+    public function setDiscountPercentage(?float $discountPercentage = null): void
     {
         $this->discountPercentage = $discountPercentage;
     }
@@ -24,7 +24,7 @@ trait DiscountTrait
     /**
      * @param float|null $discountValue
      */
-    public function setDiscountValue(float $discountValue = null)
+    public function setDiscountValue(?float $discountValue = null): void
     {
         $this->discountValue = $discountValue;
     }
@@ -32,7 +32,7 @@ trait DiscountTrait
     /**
      * @return float|null
      */
-    public function getDiscountPercentage()
+    public function getDiscountPercentage(): ?float
     {
         return $this->discountPercentage;
     }
@@ -40,7 +40,7 @@ trait DiscountTrait
     /**
      * @return float|null
      */
-    public function getDiscountValue()
+    public function getDiscountValue(): ?float
     {
         return $this->discountValue;
     }

@@ -54,7 +54,7 @@ class GetSystemTimeTest extends TestCase
         $client->tracking()->getSystemTime()->wait(true);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->mockHandler = null;
     }

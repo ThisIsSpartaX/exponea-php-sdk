@@ -20,7 +20,7 @@ trait PurchaseIdentificationTrait
     /**
      * @param string $purchaseID
      */
-    public function setPurchaseID(string $purchaseID)
+    public function setPurchaseID(string $purchaseID): void
     {
         $this->purchaseID = $purchaseID;
     }
