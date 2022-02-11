@@ -15,7 +15,7 @@ test-php7.4:
     - php -r "unlink('composer-setup.php');"
     - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
     - php ./vendor/bin/phpunit -v --colors=never --stderr
-    - php vendor/bin/phpstan analyse --level=8 src/
+    - php vendor/bin/phpstan analyse --no-progress
     - php vendor/bin/phpcs
 
 test-php7.4-highest-dependencies:
@@ -28,7 +28,7 @@ test-php7.4-highest-dependencies:
     - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
     - php composer.phar update --prefer-dist --no-ansi --no-interaction --no-progress
     - php ./vendor/bin/phpunit -v --colors=never --stderr
-    - php vendor/bin/phpstan analyse --level=8 src/
+    - php vendor/bin/phpstan analyse --no-progress
     - php vendor/bin/phpcs
 
 test-php8.0:
@@ -40,7 +40,7 @@ test-php8.0:
     - php -r "unlink('composer-setup.php');"
     - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
     - php ./vendor/bin/phpunit -v --colors=never --stderr
-    - php vendor/bin/phpstan analyse --level=8 src/
+    - php vendor/bin/phpstan analyse --no-progress
     - php vendor/bin/phpcs
 
 test-php8.0-highest-dependencies:
@@ -53,7 +53,7 @@ test-php8.0-highest-dependencies:
     - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
     - php composer.phar update --prefer-dist --no-ansi --no-interaction --no-progress
     - php ./vendor/bin/phpunit -v --colors=never --stderr
-    - php vendor/bin/phpstan analyse --level=8 src/
+    - php vendor/bin/phpstan analyse --no-progress
     - php vendor/bin/phpcs
 
 test-php8.1:
@@ -65,7 +65,7 @@ test-php8.1:
     - php -r "unlink('composer-setup.php');"
     - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
     - php ./vendor/bin/phpunit -v --colors=never --stderr
-    - php vendor/bin/phpstan analyse --level=8 src/
+    - php vendor/bin/phpstan analyse --no-progress
     - php vendor/bin/phpcs
 
 test-php8.1-highest-dependencies:
@@ -78,7 +78,7 @@ test-php8.1-highest-dependencies:
     - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
     - php composer.phar update --prefer-dist --no-ansi --no-interaction --no-progress
     - php ./vendor/bin/phpunit -v --colors=never --stderr
-    - php vendor/bin/phpstan analyse --level=8 src/
+    - php vendor/bin/phpstan analyse --no-progress
     - php vendor/bin/phpcs
 
 test-php8-latest:
@@ -90,7 +90,7 @@ test-php8-latest:
     - php -r "unlink('composer-setup.php');"
     - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
     - php ./vendor/bin/phpunit -v --colors=never --stderr
-    - php vendor/bin/phpstan analyse --level=8 src/
+    - php vendor/bin/phpstan analyse --no-progress
     - php vendor/bin/phpcs
 
 test-php8-latest-highest-dependencies:
@@ -103,5 +103,5 @@ test-php8-latest-highest-dependencies:
     - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-progress
     - php composer.phar update --prefer-dist --no-ansi --no-interaction --no-progress
     - php ./vendor/bin/phpunit -v --colors=never --stderr
-    - php vendor/bin/phpstan analyse --level=8 src/
+    - php vendor/bin/phpstan analyse --no-progress
     - php vendor/bin/phpcs
